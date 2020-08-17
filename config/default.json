@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://Robert:Roberto12!@@cluster0.gb4ff.mongodb.net/MEMORY-CARDS?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken"
+}
