@@ -1,15 +1,30 @@
 const express = require('express');
+const config = require('config');
 const connectDB = require('./config/db');
+const path = require('path');
 
 const app = express();
 
-// Connect Database
-connectDB();
+// Bodyparser Middleware
+app.use(express.json());
+
+// DB Config
+const db = config.get('mongoURI');
+
+// Connect do Mongo
+mongoose
+  .connect(db, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  })
+  .then(() => console.log('MongoDB Connected...'))
+  .catch((err) => console.log(err));
 
 // Init Middleware
 app.use(express.json({ extend: false }));
 
-app.get('/', (req, res) => res.send('API Running'));
+// app.get('/', (req, res) => res.send('API Running'));
 
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
