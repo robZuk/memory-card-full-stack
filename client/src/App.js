@@ -1,12 +1,12 @@
 import React from 'react';
 import Button from './components/atoms/Button/Button';
+import Header from './components/molecules/Header/Header';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <h1>Memory Cards</h1>
-      <Button small>Add New Card</Button>
+      <Header />
       <Button small>Delete Card</Button>
       <Button>Clear Cards</Button>
     </div>
