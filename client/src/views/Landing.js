@@ -1,5 +1,7 @@
 import React from 'react';
 import Button from '../components/atoms/Button/Button';
+import Paragraph from '../components/atoms/Paragraph/Paragraph';
+import Heading from '../components/atoms/Heading/Heading';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -14,25 +16,16 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  font-size: 30px;
   margin: 0 20px;
-`;
-
-const StyledH1 = styled.h1`
-  font-size: 55px;
-`;
-
-const StyledP = styled.p`
-  font-size: 30px;
 `;
 
 const Landing = () => {
   return (
     <StyledWrapper>
-      <StyledH1>Memory Cards</StyledH1>
-      <StyledP>
+      <Heading big>Memory Cards</Heading>
+      <Paragraph big>
         Create your profile and start learning with your memory cards
-      </StyledP>
+      </Paragraph>
       <div>
         <StyledButton as={Link} to="register">
           Sign Up

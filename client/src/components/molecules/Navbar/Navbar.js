@@ -2,7 +2,7 @@ import React from 'react';
 import logo from '../../../assets/images/logo.png';
 import Button from '../../atoms/Button/Button';
 import { Link } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   width: 100%;
