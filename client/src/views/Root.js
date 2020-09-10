@@ -5,7 +5,7 @@ import { theme } from '../theme/mainTheme';
 import { ThemeProvider } from 'styled-components';
 import store from '../store';
 import { Provider } from 'react-redux';
-import GlobalStyle from '../theme/GlobalStyle';
+
 import Navbar from '../components/molecules/Navbar/Navbar';
 import Landing from '../views/Landing';
 import Login from './Login';
@@ -14,7 +14,6 @@ import Register from './Register';
 const Root = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
       <Router>
         <Navbar />
         <Switch>
