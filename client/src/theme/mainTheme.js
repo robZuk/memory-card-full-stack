@@ -9,11 +9,26 @@ export const theme = {
   light: 300,
   bold: 600,
   fontSize: {
-    xxs: '1rem',
-    xs: '1.2rem',
-    s: '1.6rem',
+    xxs: '0.7rem',
+    xs: '1rem',
+    s: '1.4rem',
     m: '2.1rem',
     l: '2.4rem',
     xl: '4rem',
+  },
+
+  breakpoints: {
+    mobileS: `(min-width: ${'320px'})`,
+    mobileM: `(min-width: ${'375px'})`,
+    mobileL: `(min-width: ${'425px'})`,
+    tablet: `(min-width: ${'768px'})`,
+    laptop: `(min-width: ${'1024px'})`,
+    laptopL: `(min-width: ${'1440px'})`,
+    desktop: `(min-width: ${'2560px'})`,
+  },
+
+  orientation: {
+    portrait: `(orientation: portrait)`,
+    landscape: `(orientation: landscape)`,
   },
 };

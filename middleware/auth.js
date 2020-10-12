@@ -10,11 +10,14 @@ module.exports = function (req, res, next) {
     return res.status(401).json({ msg: 'No token authorization denied' });
   }
 
-  // Verify token
+  // Verify token and decoded token
   try {
     const decoded = jwt.verify(token, config.get('jwtSecret'));
     req.user = decoded.user;
     // console.log(decoded.user);
     next();
-  } catch (err) {}
+  } catch (err) {
+    console.error('something wrong with auth middleware');
+    res.status(500).json({ msg: 'Server Error' });
+  }
 };

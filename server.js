@@ -22,7 +22,7 @@ mongoose
   .then(() => console.log('MongoDB Connected...'))
   .catch((err) => console.log(err));
 
-// Init Middleware
+// Init Middleware - it should allow us to get data in request body
 app.use(express.json({ extend: false }));
 
 // app.get('/', (req, res) => res.send('API Running'));
@@ -30,7 +30,7 @@ app.use(express.json({ extend: false }));
 // Define Routes
 app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
-app.use('/api/cards', require('./routes/api/cards'));
+app.use('/api/categories', require('./routes/api/categories'));
 
 //Serve static assets if in production
 if (process.env.NODE_ENV === 'production') {

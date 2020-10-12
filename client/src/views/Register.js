@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../actions/alert';
 import { register } from '../actions/auth';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
@@ -13,34 +13,72 @@ import Button from '../components/atoms/Button/Button';
 import Paragraph from '../components/atoms/Paragraph/Paragraph';
 import Alert from '../components/molecules/Alert';
 
-const StyledWrapper = styled.div`
-  position: absolute;
-  top: 20%;
-  left: 4%;
-  height: 50%;
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  font-size: 16px;
-`;
+// const StyledWrapper = styled.div`
+//   position: absolute;
+//   top: 20%;
+//   left: 4%;
+//   height: auto;
+//   width: 80%;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   font-size: 3vh;
+
+//   @media ${({ theme }) => theme.breakpoints.laptop} {
+//     height: 40%;
+//   }
+// `;
 
 const StyledForm = styled.form`
   display: flex;
   height: 100%;
   width: 100%;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
+  @media ${({ theme }) => theme.orientation.landscape} {
+    width: 60%;
+  }
 `;
 const StyledIcon = styled.p`
-  font-size: 30px;
+  @media ${({ theme }) => theme.breakpoints.mobileM} {
+    font-size: ${({ theme }) => theme.fontSize.xs};
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.s};
+  }
+`;
+
+const StyledHeading = styled(Heading)`
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.m};
+  }
 `;
 
 const StyledInput = styled(Input)`
   margin: 2% 0;
+
+  /* @media ${({ theme }) => theme.orientation.landscape} {
+    margin: 2% 0;
+  } */
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.s};
+  }
 `;
 
-const Register = ({ setAlert, register }) => {
+const StyledButton = styled(Button)`
+  @media ${({ theme }) => theme.orientation.landscape} {
+    margin: 1% 0;
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.s};
+    width: 30%;
+  }
+`;
+const StyledParagraph = styled(Paragraph)`
+  margin-top: 7%;
+`;
+
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -62,10 +100,14 @@ const Register = ({ setAlert, register }) => {
     }
   };
 
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
-    <StyledWrapper>
-      <Alert />
-      <Heading>Sign Up</Heading>
+    <Fragment>
+      {/* <Alert /> */}
+      <StyledHeading>Sign Up</StyledHeading>
       <StyledIcon>
         <FontAwesomeIcon icon={faUser} /> Create Your Account
       </StyledIcon>
@@ -98,20 +140,25 @@ const Register = ({ setAlert, register }) => {
           value={password2}
           onChange={(e) => onChange(e)}
         />
-        <Button register type="submit" value="Register">
+        <StyledButton register type="submit" value="Register">
           Register
-        </Button>
+        </StyledButton>
       </StyledForm>
-      <Paragraph>
+      <StyledParagraph>
         Already have an account? <Link to="login">Sign In</Link>
-      </Paragraph>
-    </StyledWrapper>
+      </StyledParagraph>
+    </Fragment>
   );
 };
 
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
-export default connect(null, { setAlert, register })(Register);
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);

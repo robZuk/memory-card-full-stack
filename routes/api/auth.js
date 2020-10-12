@@ -9,14 +9,13 @@ const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 
 // @route  GET api/auth
-// @desc   Test route
-// @access Public
-// console.log(auth);
+// @desc   Get user by token
+// @access Private
 
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
-    // console.log(user);
+    const user = await User.findById(req.user.id).select('-password'); //we leave password i database
+    //console.log(user);
     res.json(user);
   } catch (err) {
     console.error(err.message);
@@ -50,7 +49,7 @@ router.post(
           .json({ errors: [{ msg: 'Invalid Credentials' }] });
       }
 
-      const isMatch = await bcrypt.compare(password, user.password);
+      const isMatch = await bcrypt.compare(password, user.password); //compare password added in form wit password from token
 
       if (!isMatch) {
         return res
@@ -68,7 +67,7 @@ router.post(
       jwt.sign(
         payload,
         config.get('jwtSecret'),
-        { expiresIn: 3600000 },
+        { expiresIn: 3600 },
         (err, token) => {
           res.json({ token });
         }

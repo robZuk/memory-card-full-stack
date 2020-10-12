@@ -16,24 +16,64 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  margin: 0 20px;
+  font-size: ${({ theme }) => theme.fontSize.s};
+  padding: 1% 3%;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.m};
+  }
+  @media ${({ theme }) => theme.breakpoints.laptop} {
+    font-size: ${({ theme }) => theme.fontSize.l};
+  }
+`;
+const StyledButtonWrapper = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    width: 40%;
+  }
+  @media ${({ theme }) => theme.breakpoints.laptop} {
+    width: 30%;
+  }
+  @media ${({ theme }) => theme.orientation.landscape} {
+    width: 28%;
+  }
+`;
+const StyledHeading = styled(Heading)`
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.xl};
+  }
+`;
+const StyledParagraph = styled(Paragraph)`
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSize.s};
+  margin: 0 2%;
+
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.m};
+  }
+  @media ${({ theme }) => theme.breakpoints.laptop} {
+    font-size: ${({ theme }) => theme.fontSize.l};
+    margin: 0 5%;
+  }
 `;
 
 const Landing = () => {
   return (
     <StyledWrapper>
-      <Heading big>Memory Cards</Heading>
-      <Paragraph big>
+      <StyledHeading>Memory Cards</StyledHeading>
+      <StyledParagraph>
         Create your profile and start learning with your memory cards
-      </Paragraph>
-      <div>
+      </StyledParagraph>
+      <StyledButtonWrapper>
         <StyledButton as={Link} to="register">
           Sign Up
         </StyledButton>
         <StyledButton as={Link} to="login">
           Login
         </StyledButton>
-      </div>
+      </StyledButtonWrapper>
     </StyledWrapper>
   );
 };

@@ -9,7 +9,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 
 // @route  POST api/users
-// @desc   Test route
+// @desc   Register user
 // @access Public
 
 router.post(
@@ -45,11 +45,11 @@ router.post(
         password,
       });
       // Encrypt password
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
+      const salt = await bcrypt.genSalt(10); //10 is recommended by documentation
+      user.password = await bcrypt.hash(password, salt); //create hash and put it user.password
       await user.save();
 
-      // Return jsonwebtoken
+      // Return token with user.id
       const payload = {
         user: {
           id: user.id, // id from mongoDB
@@ -57,9 +57,9 @@ router.post(
       };
 
       jwt.sign(
-        payload,
+        payload, //data what we send with token
         config.get('jwtSecret'),
-        { expiresIn: 3600000 },
+        { expiresIn: 3600 }, //360 is one hours
         (err, token) => {
           res.json({ token });
         }
