@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Paragraph from '../atoms/Paragraph/Paragraph';
+import Paragraph from '../atoms/Paragraph.js';
 import styled from 'styled-components';
 
 const StyledParagraph = styled(Paragraph)`

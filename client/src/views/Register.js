@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { setAlert } from '../actions/alert';
 import { register } from '../actions/auth';
@@ -6,28 +6,18 @@ import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import Heading from '../components/atoms/Heading/Heading';
-import Input from '../components/atoms/Input/Input';
-import Button from '../components/atoms/Button/Button';
-import Paragraph from '../components/atoms/Paragraph/Paragraph';
-import Alert from '../components/molecules/Alert';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import Heading from '../components/atoms/Heading.js';
+import Input from '../components/atoms/Input.js';
+import Button from '../components/atoms/Button.js';
+import Paragraph from '../components/atoms/Paragraph.js';
 
-// const StyledWrapper = styled.div`
-//   position: absolute;
-//   top: 20%;
-//   left: 4%;
-//   height: auto;
-//   width: 80%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   font-size: 3vh;
+const StyledWrapper = styled.div`
+  position: absolute;
+  left: 4%;
 
-//   @media ${({ theme }) => theme.breakpoints.laptop} {
-//     height: 40%;
-//   }
-// `;
+  width: 80%;
+`;
 
 const StyledForm = styled.form`
   display: flex;
@@ -105,11 +95,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   }
 
   return (
-    <Fragment>
+    <StyledWrapper>
       {/* <Alert /> */}
       <StyledHeading>Sign Up</StyledHeading>
       <StyledIcon>
-        <FontAwesomeIcon icon={faUser} /> Create Your Account
+        <FontAwesomeIcon icon={faUserPlus} /> Create Your Account
       </StyledIcon>
       <StyledForm onSubmit={(e) => onSubmit(e)}>
         <StyledInput
@@ -147,7 +137,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       <StyledParagraph>
         Already have an account? <Link to="login">Sign In</Link>
       </StyledParagraph>
-    </Fragment>
+    </StyledWrapper>
   );
 };
 

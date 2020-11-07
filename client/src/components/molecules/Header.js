@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../../atoms/Button/Button';
+import Button from '../atoms/Button.js';
 
 const StyledH1 = styled.h1`
   margin: 0 100px;

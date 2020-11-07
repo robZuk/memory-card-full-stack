@@ -59,10 +59,9 @@ router.put(
         return res.status(401).json({ msg: 'User not authorized' });
       }
 
-      const { name, description } = req.body;
+      const { name } = req.body;
 
       if (name) category.name = name;
-      if (description) category.description = description;
 
       const updadeCategory = await category.save();
 
@@ -102,7 +101,8 @@ router.get('/:id', auth, async (req, res) => {
       return res.status(401).json({ msg: 'User not authorized' });
     }
 
-    res.json(category.cards);
+    res.json(category);
+    // res.json(category.cards);
   } catch (err) {
     console.error(err.message);
     if (err.kind === 'ObjectId') {
@@ -113,7 +113,7 @@ router.get('/:id', auth, async (req, res) => {
 });
 
 // @route DELETE api/categories/:id
-// @desc Delete categories by id
+// @desc Delete category by id
 // @access Private
 router.delete('/:id', auth, async (req, res) => {
   try {
@@ -140,11 +140,12 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 // @route  POST api/categories/card/:id
-// @desc Card on a category
+// @desc Add card on a category
 // @access Private
 
 router.post(
-  '/card/:id',
+  // '/card/:id',
+  '/:id',
   [
     auth,
     [
@@ -184,7 +185,8 @@ router.post(
 // @desc Delete card
 // @access Private
 
-router.delete('/card/:id/:card_id', auth, async (req, res) => {
+// router.delete('/card/:id/:card_id', auth, async (req, res) => {
+router.delete('/:id/:card_id', auth, async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
 

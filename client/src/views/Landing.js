@@ -1,15 +1,16 @@
 import React from 'react';
-import Button from '../components/atoms/Button/Button';
-import Paragraph from '../components/atoms/Paragraph/Paragraph';
-import Heading from '../components/atoms/Heading/Heading';
-import { Link } from 'react-router-dom';
+import Button from '../components/atoms/Button.js';
+import Paragraph from '../components/atoms/Paragraph.js';
+import Heading from '../components/atoms/Heading.js';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   width: 100%;
   height: 60%;
   position: absolute;
-  top: 20%;
   display: grid;
   grid-template-rows: 20fr 15fr 15fr;
   justify-items: center;
@@ -59,7 +60,10 @@ const StyledParagraph = styled(Paragraph)`
   }
 `;
 
-const Landing = () => {
+const Landing = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return <Redirect to="/categories" />;
+  }
   return (
     <StyledWrapper>
       <StyledHeading>Memory Cards</StyledHeading>
@@ -78,4 +82,12 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+Landing.propTypes = {
+  isAuthenticated: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth,
+});
+
+export default connect(mapStateToProps)(Landing);

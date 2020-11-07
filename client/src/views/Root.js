@@ -5,21 +5,23 @@ import { theme } from '../theme/mainTheme';
 import { ThemeProvider } from 'styled-components';
 import store from '../store';
 import { Provider } from 'react-redux';
-import Alert from '../components/molecules/Alert';
-import Navbar from '../components/molecules/Navbar/Navbar';
+import Alert from '../components/molecules/Alert.js';
+import Navbar from '../components/molecules/Navbar.js';
 import Landing from '../views/Landing';
 import Login from './Login';
 import Register from './Register';
+import Categories from './categories/Categories';
 import { loadUser } from '../actions/auth';
 import setAuthToken from '../utils/setAuthToken';
+import PrivateRoute from '../components/routing/PrivateRoute';
 import styled from 'styled-components';
+import Category from './category/Category';
 
 const StyledWrapper = styled.div`
   position: absolute;
   top: 20%;
-  left: 4%;
-  height: auto;
-  width: 80%;
+  height: 100%;
+  width: 100%;
 `;
 const StyledAlert = styled(Alert)``;
 
@@ -36,13 +38,19 @@ const Root = () => {
       <ThemeProvider theme={theme}>
         <Router>
           <Navbar />
-          <Route exact path={routes.landing} component={Landing} />
 
           <StyledWrapper>
             <StyledAlert />
             <Switch>
+              <Route exact path={routes.landing} component={Landing} />
               <Route exact path={routes.login} component={Login} />
               <Route exact path={routes.register} component={Register} />
+              <PrivateRoute
+                exact
+                path={routes.categories}
+                component={Categories}
+              />
+              <PrivateRoute exact path={routes.category} component={Category} />
             </Switch>
           </StyledWrapper>
         </Router>

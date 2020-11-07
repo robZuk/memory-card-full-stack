@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../actions/auth';
@@ -6,12 +6,18 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import Heading from '../components/atoms/Heading/Heading';
-import Input from '../components/atoms/Input/Input';
-import Button from '../components/atoms/Button/Button';
-import Paragraph from '../components/atoms/Paragraph/Paragraph';
-import Alert from '../components/molecules/Alert';
 
+import Heading from '../components/atoms/Heading.js';
+import Input from '../components/atoms/Input.js';
+import Button from '../components/atoms/Button.js';
+import Paragraph from '../components/atoms/Paragraph.js';
+// import Alert from '../components/molecules/Alert';
+
+const StyledWrapper = styled.div`
+  position: absolute;
+  left: 4%;
+  width: 80%;
+`;
 // const StyledWrapper = styled.div`
 //   position: absolute;
 //   top: 20%;
@@ -93,10 +99,10 @@ const Login = ({ login, isAuthenticated }) => {
 
   //Redirect if logged in
   if (isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/categories" />;
   }
   return (
-    <Fragment>
+    <StyledWrapper>
       {/* <Alert /> */}
       <StyledHeading>Sign In</StyledHeading>
       <StyledIcon>
@@ -125,7 +131,7 @@ const Login = ({ login, isAuthenticated }) => {
       <Paragraph>
         Already have an account? <Link to="/register">Sign Up</Link>
       </Paragraph>
-    </Fragment>
+    </StyledWrapper>
   );
 };
 

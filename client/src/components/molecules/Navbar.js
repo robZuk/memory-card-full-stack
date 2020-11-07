@@ -1,14 +1,14 @@
 import React from 'react';
-import logo from '../../../assets/images/logo.png';
-import Button from '../../atoms/Button/Button';
-import Paragraph from '../../atoms/Paragraph/Paragraph';
+import logo from '../../assets/images/logo.png';
+import Button from '../atoms/Button.js';
+import Paragraph from '../atoms/Paragraph.js';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { logout } from '../../../actions/auth';
+import { logout } from '../../actions/auth';
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -21,17 +21,11 @@ const StyledWrapper = styled.div`
 
 const StyledInnerWrapper = styled.div`
   position: absolute;
-  top: 30%;
+  bottom: 5%;
   height: 100%;
   width: 100%;
   display: flex;
-  align-items: center;
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    top: 20%;
-  }
-  @media ${({ theme }) => theme.orientation.landscape} {
-    top: 15%;
-  }
+  align-items: flex-end;
 `;
 
 const StyledLogo = styled.img`
@@ -54,13 +48,17 @@ const StyledLogo = styled.img`
 const StyledParagraph = styled(Paragraph)`
   position: absolute;
   left: 8%;
-
+  padding: 0%;
+  margin: 0%;
   @media ${({ theme }) => theme.orientation.landscape} {
     font-size: ${({ theme }) => theme.fontSize.xs};
-    left: 40%;
+    left: 55%;
   }
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSize.s};
+  }
+  @media ${({ theme }) => theme.breakpoints.laptopL} {
+    left: 70%;
   }
 `;
 
