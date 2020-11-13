@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import Button from '../../components/atoms/Button.js';
-import Input from '../../components/atoms/Input.js';
-import { Redirect, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { updateCategory, getCategory } from '../../actions/category';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import Button from "../../components/atoms/Button.js";
+import Input from "../../components/atoms/Input.js";
+import { Redirect, withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { updateCategory, getCategory } from "../../actions/category";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -41,6 +42,10 @@ const StyledInput = styled(Input)`
   }
 `;
 
+const StyledPenIcon = styled(FontAwesomeIcon)`
+  transform: translate(50%, -100%);
+`;
+
 const EditCategory = ({
   category: { category, loading, categoryUpdated },
   updateCategory,
@@ -50,7 +55,7 @@ const EditCategory = ({
 }) => {
   const [showEditCategory, setShowEditCategory] = functions;
   const [formData, setFormData] = useState({
-    name: '',
+    name: "",
     // user: '',
   });
 
@@ -59,7 +64,7 @@ const EditCategory = ({
 
     setFormData({
       //if loading or !category.name
-      name: loading || !category.name ? '' : category.name,
+      name: loading || !category.name ? "" : category.name,
     });
     // eslint-disable-next-line
   }, [loading, getCategory]);
@@ -72,7 +77,6 @@ const EditCategory = ({
   const onSubmit = (e) => {
     e.preventDefault();
     updateCategory(formData, match.params.id);
-    console.log(match.params.id, formData, category.user);
   };
 
   if (categoryUpdated) {
@@ -97,10 +101,15 @@ const EditCategory = ({
           />
 
           <StyledButton type="submit">
-            <FontAwesomeIcon icon={faEdit} /> Rename
+            <FontAwesomeIcon icon={faPen} /> Rename
           </StyledButton>
         </StyledInnerWrapper>
       </form>
+
+      <StyledPenIcon
+        icon={faTimesCircle}
+        onClick={() => setShowEditCategory(!showEditCategory)}
+      />
     </StyledWrapper>
   );
 };

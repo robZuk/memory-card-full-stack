@@ -1,19 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addCard } from '../../actions/category';
 import styled from 'styled-components';
 
+const StyledWrapper = styled.div`
+
+`
+
 const StyledForm = styled.form`
-  position: absolute;
-  top: 50%;
+
 `;
 
-const CardForm = ({ id, addCard }) => {
+const CardForm = ({ id, addCard, functions }) => {
   const [formData, setFormData] = useState({
     question: '',
     answer: '',
   });
+
+  const [showAddNewCard, setShowAddNewCard] = functions;
 
   const { question, answer } = formData;
 
@@ -21,29 +26,35 @@ const CardForm = ({ id, addCard }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
-    <StyledForm
-      onSubmit={(e) => {
-        e.preventDefault();
-        addCard(id, formData);
-        setFormData({ question: '', answer: '' });
-      }}
-    >
-      <input
-        type="text"
-        name="question"
-        value={question}
-        onChange={(e) => onChange(e)}
-        required
-      />
-      <input
-        type="text"
-        name="answer"
-        value={answer}
-        onChange={(e) => onChange(e)}
-        required
-      />
-      <input type="submit" value="Submit" />
-    </StyledForm>
+    <StyledWrapper>
+      <StyledForm
+        onSubmit={(e) => {
+          e.preventDefault();
+          addCard(id, formData);
+          setFormData({ question: '', answer: '' });
+          setShowAddNewCard(!showAddNewCard)
+        }}
+      >
+        <input
+          type="text"
+          name="question"
+          value={question}
+          placeholder="question"
+          onChange={(e) => onChange(e)}
+          required
+        />
+        <input
+          type="text"
+          name="answer"
+          value={answer}
+          placeholder="answer"
+          onChange={(e) => onChange(e)}
+          required
+        />
+        <input type="submit" value="Add" />
+      </StyledForm>
+      <button onClick={() => setShowAddNewCard(!showAddNewCard)}>X</button>
+    </StyledWrapper>
   );
 };
 

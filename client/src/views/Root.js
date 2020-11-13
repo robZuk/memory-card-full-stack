@@ -16,6 +16,10 @@ import setAuthToken from '../utils/setAuthToken';
 import PrivateRoute from '../components/routing/PrivateRoute';
 import styled from 'styled-components';
 import Category from './category/Category';
+// import {
+//   CSSTransition,
+//   TransitionGroup,
+// } from 'react-transition-group';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -41,6 +45,13 @@ const Root = () => {
 
           <StyledWrapper>
             <StyledAlert />
+            {/* <Route render={({location})=>(
+            <TransitionGroup className="todo-list">
+            <CSSTransition
+              key= {location.key}
+              timeout={300}
+              classNames="item"
+            > */}
             <Switch>
               <Route exact path={routes.landing} component={Landing} />
               <Route exact path={routes.login} component={Login} />
@@ -52,6 +63,9 @@ const Root = () => {
               />
               <PrivateRoute exact path={routes.category} component={Category} />
             </Switch>
+            {/* </CSSTransition>
+            </TransitionGroup>
+            )}/> */}
           </StyledWrapper>
         </Router>
       </ThemeProvider>

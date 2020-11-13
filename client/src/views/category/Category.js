@@ -1,40 +1,45 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import styled from 'styled-components';
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import styled from "styled-components";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import Spinner from '../../components/molecules/Spinner.js';
-import Button from '../../components/atoms/Button.js';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import Spinner from "../../components/molecules/Spinner.js";
+import Button from "../../components/atoms/Button.js";
 
-import EditCategory from './EditCategory';
-import Cards from './Cards';
+import EditCategory from "./EditCategory";
+import Cards from "./Cards";
 
-import { getCategory } from '../../actions/category';
-import { deleteCategory } from '../../actions/category';
+import { getCategory } from "../../actions/category";
+import { deleteCategory } from "../../actions/category";
 
 const StyledWrapper = styled.div`
   font-family: Montserrat;
-
   position: absolute;
   width: 90%;
   height: auto;
   left: 5%;
   right: 5%;
   display: grid;
-  grid-template-columns: 30% 50% 20%;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "back title edit"
+    "form form form"
+    "cards cards cards";
   grid-gap: 3%;
+  justify-items: center;
 `;
 
 const StyledButton = styled(Button)`
+  grid-area: back;
   border-style: none;
   padding: 1% 4%;
   align-self: end;
-  justify-self: center;
   letter-spacing: 2px;
   font-weight: 700;
 
@@ -44,6 +49,7 @@ const StyledButton = styled(Button)`
 `;
 
 const StyledH2 = styled.h2`
+  grid-area: title;
   padding: 0;
   margin: 0;
   align-self: end;
@@ -60,31 +66,41 @@ const StyledH2 = styled.h2`
 //   justify-self: end;
 // `;
 
-const StyledEditIcon = styled.button`
-  border-style: none;
-  cursor: pointer;
-
-  background-color: ${({ theme }) => theme.white};
-
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSize.s};
-  }
-`;
-
-const StyledDeleteIcon = styled.button`
-  border-style: none;
-  cursor: pointer;
-  background-color: ${({ theme }) => theme.white};
-
-  @media ${({ theme }) => theme.breakpoints.tablet} {
-    font-size: ${({ theme }) => theme.fontSize.s};
-  }
-`;
-
 const StyledEditWrapper = styled.div`
+  grid-area: edit;
   display: grid;
   grid-template-columns: 1fr 2fr;
-  justify-items: start;
+`;
+
+const StyledEditIcon = styled(FontAwesomeIcon)`
+  border-style: none;
+  cursor: pointer;
+
+  background-color: ${({ theme }) => theme.white};
+
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.s};
+  }
+`;
+
+const StyledDeleteIcon = styled(FontAwesomeIcon)`
+  justify-self: end;
+  border-style: none;
+  cursor: pointer;
+  background-color: ${({ theme }) => theme.white};
+
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.s};
+  }
+`;
+
+const StyledEditCategory = styled.div`
+  grid-area: form;
+`;
+
+const StyledCards = styled.div`
+  margin-top: 5%;
+  grid-area: cards;
 `;
 
 const Category = ({
@@ -114,39 +130,39 @@ const Category = ({
         </StyledButton>
         <StyledH2>{category.name}</StyledH2>
 
-        {/* <StyledHamburger /> */}
-        {auth.isAuthenticated &&
-          auth.loading === false &&
-          auth.user._id === category.user && (
-            <StyledEditWrapper>
-              {!showEditCategory ? (
-                <StyledEditIcon
-                  onClick={() => setShowEditCategory(!showEditCategory)}
-                >
-                  <FontAwesomeIcon icon={faEdit} title="Edit category name" />
-                </StyledEditIcon>
-              ) : (
-                <div></div>
-              )}
+        <div>
+          {auth.isAuthenticated &&
+            auth.loading === false &&
+            auth.user._id === category.user && (
+              <StyledEditWrapper>
+                {!showEditCategory ? (
+                  <StyledEditIcon
+                    icon={faPen}
+                    title="Edit category name"
+                    onClick={() => setShowEditCategory(!showEditCategory)}
+                  />
+                ) : (
+                  <div></div>
+                )}
 
-              <StyledDeleteIcon
-                onClick={(e) => deleteCategory(match.params.id)}
-                type="button"
-              >
-                <FontAwesomeIcon icon={faTrash} title="Delete category" />
-              </StyledDeleteIcon>
-            </StyledEditWrapper>
+                <StyledDeleteIcon
+                  icon={faTrash}
+                  title="Delete category"
+                  onClick={(e) => deleteCategory(match.params.id)}
+                  type="button"
+                />
+              </StyledEditWrapper>
+            )}
+        </div>
+        <StyledEditCategory>
+          {showEditCategory && (
+            <EditCategory functions={[showEditCategory, setShowEditCategory]} />
           )}
+        </StyledEditCategory>
+        <StyledCards>
+          <Cards category={category} id={category._id} />
+        </StyledCards>
       </StyledWrapper>
-      {showEditCategory && (
-        <EditCategory functions={[showEditCategory, setShowEditCategory]} />
-      )}
-      <Cards category={category} id={category._id} />
-      {/* {category.cards.map((card) => (
-        <CardItem key={card._id} card={card} id={category._id} />
-      ))} */}
-
-      {/* <CardForm id={category._id} /> */}
     </Fragment>
   );
 };

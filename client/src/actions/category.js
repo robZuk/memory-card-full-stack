@@ -160,6 +160,7 @@ export const deleteCard = (id, cardId) => async (dispatch) => {
       payload: cardId,
     });
     // history.push(`./categories/`);
+    // window.location.reload();
     dispatch(setAlert('Card Removed', 'green'));
   } catch (err) {
     dispatch({
