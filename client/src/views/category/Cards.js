@@ -1,7 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { deleteCard } from "../../actions/category";
+import { getCards } from "../../actions/category";
 import styled from "styled-components";
 import CardForm from "./CardForm";
 import Card from "./Card";
@@ -23,26 +25,28 @@ const StyledParagraph = styled.p`
 `;
 const StyledArrowRight = styled(FontAwesomeIcon)``;
 
-const Cards = ({ id, category, deleteCard }) => {
-  const { cards, user } = category;
-
-  // React.useEffect(() => {
-  //   // data from props to array here
-  //   setArray(props.listofapi);
-  // }, [props.listofapi]);
+const Cards = ({ category: { cards }, getCards, deleteCard, match }) => {
+  console.log(cards);
+  // const { cards, user } = category;
 
   // useEffect(() => {
-  //   deleteCard(id, card._id);
-  // }, [deleteCard, id, card._id]);
-
-  // const [category.cards, deleteCard] = useState();
+  //   getCards(match.params.id);
+  // }, [getCards, match.params.id]);
 
   const cardsLength = cards.length;
 
   const [currentActiveCard, setCurrentActiveCard] = useState(0);
-
   const card = cards[currentActiveCard];
+  console.log(card);
+  console.log(currentActiveCard);
+
   const [showAddNewCard, setShowAddNewCard] = useState(false);
+
+  // useDeleteCard &&
+  //   useEffect(() => {
+  //     deleteCard(id, card._id);
+  //   }, [deleteCard, id, card._id]);
+
   // console.log(cards[0]);
   return (
     <StyledWrapper>
@@ -51,21 +55,27 @@ const Cards = ({ id, category, deleteCard }) => {
           Add New Card
         </button>
       )}
-      <button onClick={() => deleteCard(id, card._id)}>Delete card</button>
+      <button
+        onClick={() => {
+          deleteCard(match.params.id, card._id);
+        }}
+      >
+        Delete card
+      </button>
+
       <div>
         {card !== undefined ? (
-          <Card key={card._id} card={card} id={category._id} />
+          <Card key={card._id} card={card} />
         ) : (
           <p>There are no cards in this category</p>
         )}
-
-        {/* {cards.map((card, index) => (
-          <Card key={card._id} card={card} id={category._id} index={index} />
-        ))} */}
       </div>
 
       {showAddNewCard && (
-        <CardForm id={id} functions={[showAddNewCard, setShowAddNewCard]} />
+        <CardForm
+          id={match.params.id}
+          functions={[showAddNewCard, setShowAddNewCard]}
+        />
       )}
 
       <StyledNavigation>
@@ -99,14 +109,18 @@ const Cards = ({ id, category, deleteCard }) => {
 };
 
 Cards.propTypes = {
-  id: PropTypes.string.isRequired,
-  category: PropTypes.object.isRequired,
+  // id: PropTypes.string.isRequired,
+  // category: PropTypes.array.isRequired,
   auth: PropTypes.object.isRequired,
   deleteCard: PropTypes.func.isRequired,
+  getCards: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  category: state.category.category,
 });
 
-export default connect(mapStateToProps, { deleteCard })(Cards);
+export default connect(mapStateToProps, { deleteCard, getCards })(
+  withRouter(Cards)
+);

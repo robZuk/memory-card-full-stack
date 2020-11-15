@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { Fragment } from "react";
+import PropTypes from "prop-types";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
-import styled from 'styled-components';
-import { deleteCategory } from '../../actions/category';
+import styled from "styled-components";
+import { deleteCategory } from "../../actions/category";
 
 const StyledCategory = styled.div`
   width: 100%;
@@ -58,14 +58,7 @@ const StyledCategory = styled.div`
   }
 `;
 
-const CategoryItem = ({
-  deleteCategory,
-  category: { _id, name, user },
-  categoryDeleted,
-}) => {
-  if (categoryDeleted) {
-    return <Redirect to="/categories" />;
-  }
+const CategoryItem = ({ category: { _id, name, user } }) => {
   return (
     <Fragment>
       <StyledCategory
@@ -74,9 +67,6 @@ const CategoryItem = ({
         key={_id}
         data={name}
       ></StyledCategory>
-      {/* <button onClick={(e) => deleteCategory(_id)} type="button">
-        Remove category
-      </button> */}
     </Fragment>
   );
 };

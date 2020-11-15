@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { setAlert } from './alert';
+import axios from "axios";
+import { setAlert } from "./alert";
 
 import {
   ADD_CATEGORY,
@@ -10,12 +10,12 @@ import {
   CATEGORY_ERROR,
   ADD_CARD,
   DELETE_CARD,
-} from './types';
+} from "./types";
 
 // Get categories
 export const getCategories = () => async (dispatch) => {
   try {
-    const res = await axios.get('/api/categories');
+    const res = await axios.get("/api/categories");
 
     dispatch({
       type: GET_CATEGORIES,
@@ -33,7 +33,7 @@ export const getCategories = () => async (dispatch) => {
 export const addCategory = (formData) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
   try {
@@ -44,7 +44,7 @@ export const addCategory = (formData) => async (dispatch) => {
       payload: res.data,
     });
 
-    dispatch(setAlert('Category Created', 'green'));
+    dispatch(setAlert("Category Created", "green"));
   } catch (err) {
     dispatch({
       type: CATEGORY_ERROR,
@@ -72,7 +72,7 @@ export const getCategory = (id) => async (dispatch) => {
 
 // Delete category
 export const deleteCategory = (id) => async (dispatch) => {
-  if (window.confirm('Delete category? This can NOT be undone'))
+  if (window.confirm("Delete category? This can NOT be undone"))
     try {
       await axios.delete(`/api/categories/${id}`);
 
@@ -81,7 +81,7 @@ export const deleteCategory = (id) => async (dispatch) => {
         payload: id,
       });
 
-      dispatch(setAlert('Card Removed', 'green'));
+      dispatch(setAlert("Card Removed", "green"));
       // history.push('/categories');
     } catch (err) {
       dispatch({
@@ -96,7 +96,7 @@ export const updateCategory = (formData, id, history) => async (dispatch) => {
   try {
     const config = {
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
     };
     const res = await axios.put(`/api/categories/${id}`, formData, config);
@@ -106,14 +106,31 @@ export const updateCategory = (formData, id, history) => async (dispatch) => {
       payload: res.data,
     });
 
-    dispatch(setAlert('Category Updated', 'green'));
+    dispatch(setAlert("Category Updated", "green"));
     // console.log(res.data);
     // history.push('./categories');
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
-      errors.forEach((err) => dispatch(setAlert(err.msg, 'red')));
+      errors.forEach((err) => dispatch(setAlert(err.msg, "red")));
     }
+    dispatch({
+      type: CATEGORY_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get all cards by category id
+export const getCards = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/categories/card/${id}`);
+
+    dispatch({
+      type: GET_CATEGORY,
+      payload: res.data,
+    });
+  } catch (err) {
     dispatch({
       type: CATEGORY_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
@@ -125,13 +142,13 @@ export const updateCategory = (formData, id, history) => async (dispatch) => {
 export const addCard = (id, formData) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
   };
   try {
     const res = await axios.post(
-      // `/api/posts/comment/${postId}`,
-      `/api/categories/${id}`,
+      `/api/categories/card/${id}`,
+      // `/api/categories/${id}`,
       formData,
       config
     );
@@ -141,7 +158,7 @@ export const addCard = (id, formData) => async (dispatch) => {
       payload: res.data,
     });
 
-    dispatch(setAlert('Card added', 'green'));
+    dispatch(setAlert("Card added", "green"));
   } catch (err) {
     dispatch({
       type: CATEGORY_ERROR,
@@ -153,15 +170,15 @@ export const addCard = (id, formData) => async (dispatch) => {
 // Delete card
 export const deleteCard = (id, cardId) => async (dispatch) => {
   try {
-    // await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
-    await axios.delete(`/api/categories/${id}/${cardId}`);
+    await axios.delete(`/api/categories/card/${id}/${cardId}`);
+    // await axios.delete(`/api/categories/${id}/${cardId}`);
     dispatch({
       type: DELETE_CARD,
       payload: cardId,
     });
-    // history.push(`./categories/`);
+    // history.push(`/categories/${id}`);
     // window.location.reload();
-    dispatch(setAlert('Card Removed', 'green'));
+    dispatch(setAlert("Card Removed", "green"));
   } catch (err) {
     dispatch({
       type: CATEGORY_ERROR,

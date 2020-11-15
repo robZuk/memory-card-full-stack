@@ -1,21 +1,22 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { routes } from '../routes';
-import { theme } from '../theme/mainTheme';
-import { ThemeProvider } from 'styled-components';
-import store from '../store';
-import { Provider } from 'react-redux';
-import Alert from '../components/molecules/Alert.js';
-import Navbar from '../components/molecules/Navbar.js';
-import Landing from '../views/Landing';
-import Login from './Login';
-import Register from './Register';
-import Categories from './categories/Categories';
-import { loadUser } from '../actions/auth';
-import setAuthToken from '../utils/setAuthToken';
-import PrivateRoute from '../components/routing/PrivateRoute';
-import styled from 'styled-components';
-import Category from './category/Category';
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { routes } from "../routes";
+import { theme } from "../theme/mainTheme";
+import { ThemeProvider } from "styled-components";
+import store from "../store";
+import { Provider } from "react-redux";
+import Alert from "../components/molecules/Alert.js";
+import Navbar from "../components/molecules/Navbar.js";
+import Landing from "../views/Landing";
+import Login from "./Login";
+import Register from "./Register";
+import Categories from "./categories/Categories";
+import { loadUser } from "../actions/auth";
+import setAuthToken from "../utils/setAuthToken";
+import PrivateRoute from "../components/routing/PrivateRoute";
+import styled from "styled-components";
+import Category from "./category/Category";
+import Cards from "./category/Cards";
 // import {
 //   CSSTransition,
 //   TransitionGroup,
@@ -62,6 +63,7 @@ const Root = () => {
                 component={Categories}
               />
               <PrivateRoute exact path={routes.category} component={Category} />
+              <PrivateRoute exact path={routes.cards} component={Cards} />
             </Switch>
             {/* </CSSTransition>
             </TransitionGroup>

@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -14,8 +14,7 @@ import Button from "../../components/atoms/Button.js";
 import EditCategory from "./EditCategory";
 import Cards from "./Cards";
 
-import { getCategory } from "../../actions/category";
-import { deleteCategory } from "../../actions/category";
+import { getCategory, deleteCategory } from "../../actions/category";
 
 const StyledWrapper = styled.div`
   font-family: Montserrat;
@@ -60,11 +59,6 @@ const StyledH2 = styled.h2`
     font-size: ${({ theme }) => theme.fontSize.l};
   }
 `;
-
-// const StyledHamburger = styled(Hamburger)`
-//   align-self: end;
-//   justify-self: end;
-// `;
 
 const StyledEditWrapper = styled.div`
   grid-area: edit;
@@ -160,7 +154,9 @@ const Category = ({
           )}
         </StyledEditCategory>
         <StyledCards>
-          <Cards category={category} id={category._id} />
+          {/* <Redirect to={`/categories/card/${match.params.id}`} />; */}
+          {/* <Cards category={category} id={category._id} /> */}
+          <Cards id={category._id} />
         </StyledCards>
       </StyledWrapper>
     </Fragment>
@@ -179,5 +175,5 @@ const mapStatetoProps = (state) => ({
 });
 
 export default connect(mapStatetoProps, { getCategory, deleteCategory })(
-  Category
+  withRouter(Category)
 );
