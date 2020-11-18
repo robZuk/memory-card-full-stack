@@ -1,9 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Button = styled.button`
   cursor: pointer;
   background-color: ${({ theme }) => theme.white};
-  border: 1px solid #aaa;
+  border: 1px solid ${({ theme }) => theme.grey300};
   border-radius: 3px;
   font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.black};

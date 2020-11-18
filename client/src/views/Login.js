@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { login } from '../actions/auth';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { login } from "../actions/auth";
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-import Heading from '../components/atoms/Heading.js';
-import Input from '../components/atoms/Input.js';
-import Button from '../components/atoms/Button.js';
-import Paragraph from '../components/atoms/Paragraph.js';
+import Heading from "../components/atoms/Heading.js";
+import Input from "../components/atoms/Input.js";
+import Button from "../components/atoms/Button.js";
+import Paragraph from "../components/atoms/Paragraph.js";
 // import Alert from '../components/molecules/Alert';
 
 const StyledWrapper = styled.div`
@@ -83,8 +83,8 @@ const StyledButton = styled(Button)`
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const { email, password } = formData;

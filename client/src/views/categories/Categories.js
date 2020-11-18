@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 
-import { connect } from 'react-redux';
-import Spinner from '../../components/molecules/Spinner.js';
-import styled from 'styled-components';
+import { connect } from "react-redux";
+import Spinner from "../../components/molecules/Spinner.js";
+import styled from "styled-components";
 
-import { getCategories } from '../../actions/category';
-import AddCategory from './AddCategory';
-import CategoryItem from './CategoryItem';
+import { getCategories } from "../../actions/category";
+import AddCategory from "./AddCategory";
+import CategoryItem from "./CategoryItem";
 
 const StyledWrapper = styled.div`
   position: absolute;

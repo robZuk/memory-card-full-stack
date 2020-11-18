@@ -16,11 +16,6 @@ import setAuthToken from "../utils/setAuthToken";
 import PrivateRoute from "../components/routing/PrivateRoute";
 import styled from "styled-components";
 import Category from "./category/Category";
-import Cards from "./category/Cards";
-// import {
-//   CSSTransition,
-//   TransitionGroup,
-// } from 'react-transition-group';
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -38,21 +33,14 @@ const Root = () => {
   useEffect(() => {
     store.dispatch(loadUser(), []);
   });
+
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <Router>
           <Navbar />
-
           <StyledWrapper>
             <StyledAlert />
-            {/* <Route render={({location})=>(
-            <TransitionGroup className="todo-list">
-            <CSSTransition
-              key= {location.key}
-              timeout={300}
-              classNames="item"
-            > */}
             <Switch>
               <Route exact path={routes.landing} component={Landing} />
               <Route exact path={routes.login} component={Login} />
@@ -63,11 +51,7 @@ const Root = () => {
                 component={Categories}
               />
               <PrivateRoute exact path={routes.category} component={Category} />
-              <PrivateRoute exact path={routes.cards} component={Cards} />
             </Switch>
-            {/* </CSSTransition>
-            </TransitionGroup>
-            )}/> */}
           </StyledWrapper>
         </Router>
       </ThemeProvider>

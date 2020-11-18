@@ -1,11 +1,11 @@
-import React from 'react';
-import Button from '../components/atoms/Button.js';
-import Paragraph from '../components/atoms/Paragraph.js';
-import Heading from '../components/atoms/Heading.js';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React from "react";
+import Button from "../components/atoms/Button.js";
+import Paragraph from "../components/atoms/Paragraph.js";
+import Heading from "../components/atoms/Heading.js";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import styled from "styled-components";
 
 const StyledWrapper = styled.div`
   width: 100%;

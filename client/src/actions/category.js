@@ -121,23 +121,6 @@ export const updateCategory = (formData, id, history) => async (dispatch) => {
   }
 };
 
-// Get all cards by category id
-export const getCards = (id) => async (dispatch) => {
-  try {
-    const res = await axios.get(`/api/categories/card/${id}`);
-
-    dispatch({
-      type: GET_CATEGORY,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: CATEGORY_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
 // Add card
 export const addCard = (id, formData) => async (dispatch) => {
   const config = {
@@ -147,8 +130,8 @@ export const addCard = (id, formData) => async (dispatch) => {
   };
   try {
     const res = await axios.post(
-      `/api/categories/card/${id}`,
-      // `/api/categories/${id}`,
+      // `/api/posts/comment/${postId}`,
+      `/api/categories/${id}`,
       formData,
       config
     );
@@ -170,13 +153,13 @@ export const addCard = (id, formData) => async (dispatch) => {
 // Delete card
 export const deleteCard = (id, cardId) => async (dispatch) => {
   try {
-    await axios.delete(`/api/categories/card/${id}/${cardId}`);
-    // await axios.delete(`/api/categories/${id}/${cardId}`);
+    // await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
+    await axios.delete(`/api/categories/${id}/${cardId}`);
     dispatch({
       type: DELETE_CARD,
       payload: cardId,
     });
-    // history.push(`/categories/${id}`);
+    // history.push(`./categories/`);
     // window.location.reload();
     dispatch(setAlert("Card Removed", "green"));
   } catch (err) {

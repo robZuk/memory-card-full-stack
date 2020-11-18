@@ -1,19 +1,32 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState } from "react";
+
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { deleteCard } from "../../actions/category";
-import { getCards } from "../../actions/category";
 import styled from "styled-components";
 import CardForm from "./CardForm";
 import Card from "./Card";
+import Button from "../../components/atoms/Button.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
-const StyledWrapper = styled.div``;
+const StyledWrapper = styled.div`
+  display: grid;
+  grid-template-rows: 1fr 6fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "add  . ."
+    "card card card"
+    ". . delete"
+    "nav nav  nav";
+  grid-gap: 3%;
+`;
 
 const StyledNavigation = styled.div`
+  grid-area: nav;
   display: grid;
   justify-items: center;
   grid-template-columns: 1fr 2fr 1fr;
@@ -25,59 +38,66 @@ const StyledParagraph = styled.p`
 `;
 const StyledArrowRight = styled(FontAwesomeIcon)``;
 
-const Cards = ({ category: { cards }, getCards, deleteCard, match }) => {
-  console.log(cards);
-  // const { cards, user } = category;
+const StyledButton = styled.button`
+  padding: 0 2%;
+  border: 1px solid ${({ theme }) => theme.grey300};
+  border-radius: 3px;
+  background-color: ${({ theme }) => theme.white};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+`;
 
-  // useEffect(() => {
-  //   getCards(match.params.id);
-  // }, [getCards, match.params.id]);
+const StyledAddButton = styled(StyledButton)`
+  grid-area: add;
+`;
+
+const StyledDeleteButton = styled(StyledButton)`
+  grid-area: delete;
+`;
+
+const StyledCard = styled.div`
+  grid-area: card;
+`;
+
+const Cards = ({ id, auth, category, deleteCard }) => {
+  const { cards, user } = category;
 
   const cardsLength = cards.length;
 
   const [currentActiveCard, setCurrentActiveCard] = useState(0);
-  const card = cards[currentActiveCard];
-  console.log(card);
-  console.log(currentActiveCard);
 
+  const card = cards[currentActiveCard];
   const [showAddNewCard, setShowAddNewCard] = useState(false);
 
-  // useDeleteCard &&
-  //   useEffect(() => {
-  //     deleteCard(id, card._id);
-  //   }, [deleteCard, id, card._id]);
-
-  // console.log(cards[0]);
   return (
     <StyledWrapper>
       {!showAddNewCard && (
-        <button onClick={() => setShowAddNewCard(!showAddNewCard)}>
-          Add New Card
-        </button>
+        <StyledAddButton onClick={() => setShowAddNewCard(!showAddNewCard)}>
+          <FontAwesomeIcon icon={faPlus} /> Add New Card
+        </StyledAddButton>
       )}
-      <button
-        onClick={() => {
-          deleteCard(match.params.id, card._id);
-        }}
-      >
-        Delete card
-      </button>
 
-      <div>
+      <StyledCard>
         {card !== undefined ? (
-          <Card key={card._id} card={card} />
+          <Card key={card._id} card={card} id={category._id} />
         ) : (
           <p>There are no cards in this category</p>
         )}
-      </div>
-
+      </StyledCard>
       {showAddNewCard && (
-        <CardForm
-          id={match.params.id}
-          functions={[showAddNewCard, setShowAddNewCard]}
-        />
+        <CardForm id={id} functions={[showAddNewCard, setShowAddNewCard]} />
       )}
-
+      {!auth.loading && user === auth.user._id && cardsLength ? (
+        <StyledDeleteButton
+          type="submit"
+          value="Add"
+          onClick={() => {
+            deleteCard(id, card._id);
+          }}
+        >
+          {" "}
+          <FontAwesomeIcon icon={faMinus} /> Delete card
+        </StyledDeleteButton>
+      ) : null}
       <StyledNavigation>
         <StyledArrowLeft
           icon={faArrowLeft}
@@ -109,18 +129,14 @@ const Cards = ({ category: { cards }, getCards, deleteCard, match }) => {
 };
 
 Cards.propTypes = {
-  // id: PropTypes.string.isRequired,
-  // category: PropTypes.array.isRequired,
+  id: PropTypes.string.isRequired,
+  category: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   deleteCard: PropTypes.func.isRequired,
-  getCards: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  category: state.category.category,
 });
 
-export default connect(mapStateToProps, { deleteCard, getCards })(
-  withRouter(Cards)
-);
+export default connect(mapStateToProps, { deleteCard })(Cards);

@@ -139,39 +139,13 @@ router.delete("/:id", auth, async (req, res) => {
   }
 });
 
-// @route GET api/categories/cards/:id
-// @desc Get alll cards by category ID
-// @access Private
-router.get("/card/:id", auth, async (req, res) => {
-  try {
-    const category = await Category.findById(req.params.id);
-    if (!category) {
-      return res.status(404).json({ msg: "Category not found" });
-    }
-
-    //Check user
-    if (category.user.toString() !== req.user.id) {
-      return res.status(401).json({ msg: "User not authorized" });
-    }
-
-    res.json(category.cards);
-    // res.json(category.cards);
-  } catch (err) {
-    console.error(err.message);
-    if (err.kind === "ObjectId") {
-      return res.status(404).json({ msg: "Category not found" });
-    }
-    res.status(500).send("Server Error");
-  }
-});
-
 // @route  POST api/categories/card/:id
 // @desc Add card on a category
 // @access Private
 
 router.post(
-  "/card/:id",
-  // '/:id',
+  // '/card/:id',
+  "/:id",
   [
     auth,
     [
@@ -211,8 +185,8 @@ router.post(
 // @desc Delete card
 // @access Private
 
-router.delete("/card/:id/:card_id", auth, async (req, res) => {
-  // router.delete("/:id/:card_id", auth, async (req, res) => {
+// router.delete('/card/:id/:card_id', auth, async (req, res) => {
+router.delete("/:id/:card_id", auth, async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
 

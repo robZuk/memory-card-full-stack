@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import styled from "styled-components";
@@ -14,7 +14,8 @@ import Button from "../../components/atoms/Button.js";
 import EditCategory from "./EditCategory";
 import Cards from "./Cards";
 
-import { getCategory, deleteCategory } from "../../actions/category";
+import { getCategory } from "../../actions/category";
+import { deleteCategory } from "../../actions/category";
 
 const StyledWrapper = styled.div`
   font-family: Montserrat;
@@ -29,7 +30,7 @@ const StyledWrapper = styled.div`
   grid-template-areas:
     "back title edit"
     "form form form"
-    "cards cards cards";
+    ". cards .";
   grid-gap: 3%;
   justify-items: center;
 `;
@@ -69,11 +70,14 @@ const StyledEditWrapper = styled.div`
 const StyledEditIcon = styled(FontAwesomeIcon)`
   border-style: none;
   cursor: pointer;
-
   background-color: ${({ theme }) => theme.white};
-
+  transition: all 0.2s ease-in-out;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSize.s};
+  }
+
+  :hover {
+    transform: scale(1.2);
   }
 `;
 
@@ -82,9 +86,12 @@ const StyledDeleteIcon = styled(FontAwesomeIcon)`
   border-style: none;
   cursor: pointer;
   background-color: ${({ theme }) => theme.white};
-
+  transition: all 0.2s ease-in-out;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSize.s};
+  }
+  :hover {
+    transform: scale(1.2);
   }
 `;
 
@@ -95,6 +102,7 @@ const StyledEditCategory = styled.div`
 const StyledCards = styled.div`
   margin-top: 5%;
   grid-area: cards;
+  width: 80%;
 `;
 
 const Category = ({
@@ -154,9 +162,7 @@ const Category = ({
           )}
         </StyledEditCategory>
         <StyledCards>
-          {/* <Redirect to={`/categories/card/${match.params.id}`} />; */}
-          {/* <Cards category={category} id={category._id} /> */}
-          <Cards id={category._id} />
+          <Cards category={category} id={category._id} />
         </StyledCards>
       </StyledWrapper>
     </Fragment>
@@ -175,5 +181,5 @@ const mapStatetoProps = (state) => ({
 });
 
 export default connect(mapStatetoProps, { getCategory, deleteCategory })(
-  withRouter(Category)
+  Category
 );

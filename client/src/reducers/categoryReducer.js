@@ -61,7 +61,6 @@ export default function (state = initialState, action) {
           (category) => category._id !== payload
         ),
         loading: false,
-        categoryDeleted: true,
       };
     case CATEGORY_ERROR:
       return {
@@ -79,7 +78,7 @@ export default function (state = initialState, action) {
     case DELETE_CARD:
       return {
         ...state,
-        categroy: {
+        category: {
           ...state.category,
           cards: state.category.cards.filter((card) => card._id !== payload),
         },
