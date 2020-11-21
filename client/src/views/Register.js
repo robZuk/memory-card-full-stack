@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { setAlert } from '../actions/alert';
-import { register } from '../actions/auth';
-import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
-import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import Heading from '../components/atoms/Heading.js';
-import Input from '../components/atoms/Input.js';
-import Button from '../components/atoms/Button.js';
-import Paragraph from '../components/atoms/Paragraph.js';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { setAlert } from "../actions/alert";
+import { register } from "../actions/auth";
+import PropTypes from "prop-types";
+import { Link, Redirect } from "react-router-dom";
+import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import Heading from "../components/atoms/Heading.js";
+import Input from "../components/atoms/Input.js";
+import Button from "../components/atoms/Button.js";
+import Paragraph from "../components/atoms/Paragraph.js";
 
 const StyledWrapper = styled.div`
   position: absolute;
@@ -70,10 +70,10 @@ const StyledParagraph = styled(Paragraph)`
 
 const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password2: '',
+    name: "",
+    email: "",
+    password: "",
+    password2: "",
   });
 
   const { name, email, password, password2 } = formData;
@@ -84,19 +84,18 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
-      setAlert('Passwords do not match', 'red');
+      setAlert("Passwords do not match", "red");
     } else {
       register({ name, email, password });
     }
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to="/categories" />;
   }
 
   return (
     <StyledWrapper>
-      {/* <Alert /> */}
       <StyledHeading>Sign Up</StyledHeading>
       <StyledIcon>
         <FontAwesomeIcon icon={faUserPlus} /> Create Your Account

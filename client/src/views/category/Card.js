@@ -1,61 +1,88 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { deleteCard } from "../../actions/category";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const StyledWrapper = styled.div`
-  border: 1px solid ${({ theme }) => theme.grey300};
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
-  perspective: 1000px;
+// Flipping card
+const StyledCard = styled.div`
   position: relative;
-  /* height: 300px;
-  width: 500px; */
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  perspective: 1000px;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+
+  &:after {
+    content: "\f021  Flip";
+    font-family: "Font Awesome 5 Free", Lato, sans-serif;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  &.flipped {
+    & > div:first-of-type {
+      // Front side of the card
+      transform: rotateY(-180deg);
+    }
+
+    & > div:last-of-type {
+      // Back side of the card
+      transform: rotateY(0deg);
+    }
+  }
 `;
 
-const StyledCard = styled.div`
-  padding: 15%;
-  cursor: pointer;
+// Card sides
+const CardSide = css`
   position: absolute;
-  opacity: 0;
   top: 0;
   left: 0;
-  height: 100%;
+  overflow: hidden;
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 100%;
-  transform: translateX(50%) rotateY(-10deg);
-  transition: transform 0.4s ease, opacity 0.4s ease;
+  height: 100%;
+  backface-visibility: hidden;
+  transition: all 0.25s ease-in;
 `;
 
-const StyledInnerCard = styled.div`
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-  height: 100%;
-  width: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 0.4s ease;
-`;
+// Card side - front
+const CardFront = styled.div`
+  ${CardSide};
 
-const StyledInnerCardFront = styled.div``;
-const StyledInnerCardBack = styled.div``;
+  text-align: center;
+`;
+// Card side - back
+const CardBack = styled.div`
+  ${CardSide};
+  text-align: center;
+  transform: rotateY(-180deg);
+`;
 
 const Card = ({ card: { question, answer } }) => {
-  const [showAnswer, setShowAnswer] = useState(false);
-  console.log(showAnswer);
+  const flipCard = (e) => {
+    e.currentTarget.classList.toggle("flipped");
+  };
+
   return (
-    <StyledWrapper>
-      <StyledCard onClick={() => setShowAnswer(!showAnswer)}>
-        <StyledInnerCard>
-          <StyledInnerCardFront>
-            <p>{question}</p>
-          </StyledInnerCardFront>
-          <StyledInnerCardBack>
-            <p>{answer}</p>
-          </StyledInnerCardBack>
-        </StyledInnerCard>
-      </StyledCard>
-    </StyledWrapper>
+    <StyledCard onClick={(e) => flipCard(e)}>
+      <CardFront>
+        <p>{question}</p>
+      </CardFront>
+
+      <CardBack>
+        <p>{answer}</p>
+      </CardBack>
+    </StyledCard>
   );
 };
 

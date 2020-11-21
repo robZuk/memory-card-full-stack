@@ -42,7 +42,8 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const StyledPenIcon = styled(FontAwesomeIcon)`
+const StyledXIcon = styled(FontAwesomeIcon)`
+  cursor: pointer;
   transform: translate(50%, -100%);
 `;
 
@@ -106,7 +107,7 @@ const EditCategory = ({
         </StyledInnerWrapper>
       </form>
 
-      <StyledPenIcon
+      <StyledXIcon
         icon={faTimesCircle}
         onClick={() => setShowEditCategory(!showEditCategory)}
       />

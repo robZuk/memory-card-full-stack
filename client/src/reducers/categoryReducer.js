@@ -61,6 +61,7 @@ export default function (state = initialState, action) {
           (category) => category._id !== payload
         ),
         loading: false,
+        categoryDeleted: true,
       };
     case CATEGORY_ERROR:
       return {

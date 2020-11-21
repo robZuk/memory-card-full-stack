@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-
+import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { deleteCard } from "../../actions/category";
 import styled from "styled-components";
 import CardForm from "./CardForm";
 import Card from "./Card";
-import Button from "../../components/atoms/Button.js";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
@@ -16,13 +15,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 const StyledWrapper = styled.div`
   display: grid;
   grid-template-rows: 1fr 6fr 1fr 1fr;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: auto;
   grid-template-areas:
     "add  . ."
     "card card card"
     ". . delete"
-    "nav nav  nav";
-  grid-gap: 3%;
+    ". nav  .";
+  grid-gap: 10%;
 `;
 
 const StyledNavigation = styled.div`
@@ -32,14 +31,21 @@ const StyledNavigation = styled.div`
   grid-template-columns: 1fr 2fr 1fr;
 `;
 
-const StyledArrowLeft = styled(FontAwesomeIcon)``;
-const StyledParagraph = styled.p`
+const StyledNavigationNum = styled.p`
   margin: 0;
 `;
-const StyledArrowRight = styled(FontAwesomeIcon)``;
+
+const StyledArrowLeft = styled(FontAwesomeIcon)`
+  cursor: pointer;
+`;
+
+const StyledArrowRight = styled(FontAwesomeIcon)`
+  cursor: pointer;
+`;
 
 const StyledButton = styled.button`
-  padding: 0 2%;
+  cursor: pointer;
+  padding: 3%;
   border: 1px solid ${({ theme }) => theme.grey300};
   border-radius: 3px;
   background-color: ${({ theme }) => theme.white};
@@ -58,6 +64,11 @@ const StyledCard = styled.div`
   grid-area: card;
 `;
 
+const StyledParagraph = styled.p`
+  text-align: center;
+  font-size: ${({ theme }) => theme.fontSize.s};
+`;
+
 const Cards = ({ id, auth, category, deleteCard }) => {
   const { cards, user } = category;
 
@@ -70,9 +81,12 @@ const Cards = ({ id, auth, category, deleteCard }) => {
 
   return (
     <StyledWrapper>
+      {showAddNewCard && (
+        <CardForm id={id} functions={[showAddNewCard, setShowAddNewCard]} />
+      )}
       {!showAddNewCard && (
         <StyledAddButton onClick={() => setShowAddNewCard(!showAddNewCard)}>
-          <FontAwesomeIcon icon={faPlus} /> Add New Card
+          <FontAwesomeIcon icon={faPlus} /> Add Card
         </StyledAddButton>
       )}
 
@@ -80,12 +94,10 @@ const Cards = ({ id, auth, category, deleteCard }) => {
         {card !== undefined ? (
           <Card key={card._id} card={card} id={category._id} />
         ) : (
-          <p>There are no cards in this category</p>
+          <StyledParagraph>There are no cards in this category</StyledParagraph>
         )}
       </StyledCard>
-      {showAddNewCard && (
-        <CardForm id={id} functions={[showAddNewCard, setShowAddNewCard]} />
-      )}
+
       {!auth.loading && user === auth.user._id && cardsLength ? (
         <StyledDeleteButton
           type="submit"
@@ -98,32 +110,32 @@ const Cards = ({ id, auth, category, deleteCard }) => {
           <FontAwesomeIcon icon={faMinus} /> Delete card
         </StyledDeleteButton>
       ) : null}
-      <StyledNavigation>
-        <StyledArrowLeft
-          icon={faArrowLeft}
-          onClick={() => {
-            setCurrentActiveCard(currentActiveCard - 1);
-            if (currentActiveCard < 1) {
-              setCurrentActiveCard(0);
-            }
-            return;
-          }}
-        />
-        <StyledParagraph>
-          {cardsLength !== 0
-            ? `${currentActiveCard + 1} / ${cardsLength}`
-            : null}
-        </StyledParagraph>
-        <StyledArrowRight
-          icon={faArrowRight}
-          onClick={() => {
-            setCurrentActiveCard(currentActiveCard + 1);
-            if (currentActiveCard >= cardsLength - 1) {
-              setCurrentActiveCard(cardsLength - 1);
-            }
-          }}
-        />
-      </StyledNavigation>
+      {cardsLength !== 0 ? (
+        <StyledNavigation>
+          <StyledArrowLeft
+            icon={faArrowLeft}
+            onClick={() => {
+              setCurrentActiveCard(currentActiveCard - 1);
+              if (currentActiveCard < 1) {
+                setCurrentActiveCard(0);
+              }
+              return;
+            }}
+          />
+          <StyledNavigationNum>
+            {currentActiveCard + 1} / {cardsLength}
+          </StyledNavigationNum>
+          <StyledArrowRight
+            icon={faArrowRight}
+            onClick={() => {
+              setCurrentActiveCard(currentActiveCard + 1);
+              if (currentActiveCard >= cardsLength - 1) {
+                setCurrentActiveCard(cardsLength - 1);
+              }
+            }}
+          />
+        </StyledNavigation>
+      ) : null}
     </StyledWrapper>
   );
 };

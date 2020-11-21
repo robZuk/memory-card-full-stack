@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addCategory } from '../../actions/category';
-import styled from 'styled-components';
-import Input from '../../components/atoms/Input.js';
-import Button from '../../components/atoms/Button.js';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { addCategory } from "../../actions/category";
+import styled from "styled-components";
+import Input from "../../components/atoms/Input.js";
+import Button from "../../components/atoms/Button.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const StyledForm = styled.form`
   margin: 5% 0;
@@ -29,14 +29,14 @@ const StyledButton = styled(Button)`
 `;
 
 const AddCategory = ({ addCategory }) => {
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   return (
     <StyledForm
       onSubmit={(e) => {
         e.preventDefault();
         addCategory({ name });
-        setName('');
+        setName("");
       }}
     >
       <StyledInput
@@ -49,7 +49,7 @@ const AddCategory = ({ addCategory }) => {
       />
 
       <StyledButton type="submit" value="Add">
-        {' '}
+        {" "}
         <FontAwesomeIcon icon={faPlus} /> Add
       </StyledButton>
     </StyledForm>

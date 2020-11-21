@@ -144,3 +144,29 @@
 [1117/191353.937:ERROR:crash_report_database_win.cc(457)] unexpected header
 [1117/192853.944:ERROR:crash_report_database_win.cc(457)] unexpected header
 [1118/034012.565:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1118/051957.888:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1118/162735.072:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1118/163735.075:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1118/163735.079:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\rober\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\5be84748-f6fb-4b6e-b3fa-97ff7dae7728: The system cannot find the path specified. (0x3)
+[1118/163735.079:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1118/163735.079:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1118/163735.083:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1118/164235.075:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1118/165735.086:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1119/045407.140:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1119/141046.990:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/043223.866:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/071316.896:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/072316.918:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/072316.918:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1120/072316.918:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/072316.922:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/072816.900:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/163038.520:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/164038.521:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/164038.521:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1120/164038.521:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/164038.521:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/164538.532:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1120/170038.539:ERROR:crash_report_database_win.cc(457)] unexpected header
+[1121/053904.920:ERROR:crash_report_database_win.cc(457)] unexpected header

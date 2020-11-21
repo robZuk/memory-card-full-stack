@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
  @import url('https://fonts.googleapis.com/css?family=Lato:300,500,700&display=swap');
@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
 
 body {
   box-sizing: border-box;
+  height: 100vh;
   padding: 0;
   margin: 0;
   font-family: 'Lato', sans-serif;
