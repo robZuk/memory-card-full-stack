@@ -11,30 +11,12 @@ import Heading from "../components/atoms/Heading.js";
 import Input from "../components/atoms/Input.js";
 import Button from "../components/atoms/Button.js";
 import Paragraph from "../components/atoms/Paragraph.js";
-// import Alert from '../components/molecules/Alert';
 
 const StyledWrapper = styled.div`
   position: absolute;
   left: 4%;
   width: 80%;
 `;
-// const StyledWrapper = styled.div`
-//   position: absolute;
-//   top: 20%;
-//   left: 4%;
-//   height: 40%;
-//   width: 80%;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-//   font-size: 3vh;
-//   @media ${({ theme }) => theme.breakpoints.tablet} {
-//     height: 35%;
-//   }
-//   @media ${({ theme }) => theme.breakpoints.laptop} {
-//     height: 30%;
-//   }
-// `;
 
 const StyledForm = styled.form`
   display: flex;
@@ -63,9 +45,7 @@ const StyledHeading = styled(Heading)`
 
 const StyledInput = styled(Input)`
   margin: 2% 0;
-  /* @media ${({ theme }) => theme.orientation.landscape} {
-    margin: 2% 0;
-  } */
+
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSize.s};
   }

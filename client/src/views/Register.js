@@ -47,9 +47,6 @@ const StyledHeading = styled(Heading)`
 const StyledInput = styled(Input)`
   margin: 2% 0;
 
-  /* @media ${({ theme }) => theme.orientation.landscape} {
-    margin: 2% 0;
-  } */
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSize.s};
   }

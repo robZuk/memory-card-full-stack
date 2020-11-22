@@ -15,6 +15,8 @@ body {
   padding: 0;
   margin: 0;
   font-family: 'Lato', sans-serif;
+  width: 100vw;
+  height: 100vh;
 }
 
 `;

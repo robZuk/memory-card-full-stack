@@ -4,5 +4,4 @@ export const routes = {
   register: "/register",
   categories: "/categories",
   category: "/categories/:id",
-  cards: "/categories/cards/:id",
 };

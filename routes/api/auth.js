@@ -1,25 +1,24 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const auth = require('../../middleware/auth');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { check, validationResult } = require('express-validator');
+const bcrypt = require("bcryptjs");
+const auth = require("../../middleware/auth");
+const jwt = require("jsonwebtoken");
+const config = require("config");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../../models/User');
+const User = require("../../models/User");
 
 // @route  GET api/auth
 // @desc   Get user by token
 // @access Private
 
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password'); //we leave password i database
-    //console.log(user);
+    const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
@@ -27,10 +26,10 @@ router.get('/', auth, async (req, res) => {
 // @desc   Authenticate user & get token
 // @access Public
 router.post(
-  '/',
+  "/",
   [
-    check('email', 'Please include a valid email').isEmail(),
-    check('password', 'Password is required').exists(),
+    check("email", "Please include a valid email").isEmail(),
+    check("password", "Password is required").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -46,7 +45,7 @@ router.post(
       if (!user) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
       const isMatch = await bcrypt.compare(password, user.password); //compare password added in form wit password from token
@@ -54,7 +53,7 @@ router.post(
       if (!isMatch) {
         return res
           .status(400)
-          .json({ errors: [{ msg: 'Invalid Credentials' }] });
+          .json({ errors: [{ msg: "Invalid Credentials" }] });
       }
 
       // Return jsonwebtoken
@@ -66,14 +65,14 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        config.get("jwtSecret"),
         { expiresIn: 3600 },
         (err, token) => {
           res.json({ token });
         }
       );
     } catch (err) {
-      res.status(500).send('Server error');
+      res.status(500).send("Server error");
     }
   }
 );

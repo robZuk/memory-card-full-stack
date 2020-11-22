@@ -144,7 +144,6 @@ router.delete("/:id", auth, async (req, res) => {
 // @access Private
 
 router.post(
-  // '/card/:id',
   "/:id",
   [
     auth,
@@ -185,7 +184,6 @@ router.post(
 // @desc Delete card
 // @access Private
 
-// router.delete('/card/:id/:card_id', auth, async (req, res) => {
 router.delete("/:id/:card_id", auth, async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
