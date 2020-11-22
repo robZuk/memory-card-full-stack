@@ -1,14 +1,15 @@
-import React from 'react';
-import logo from '../../assets/images/logo.png';
-import Button from '../atoms/Button.js';
-import Paragraph from '../atoms/Paragraph.js';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
-import styled from 'styled-components';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { logout } from '../../actions/auth';
+import React from "react";
+import logo from "../../assets/images/logo.png";
+import Button from "../atoms/Button.js";
+import Paragraph from "../atoms/Paragraph.js";
+
+import { Link, useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { logout } from "../../actions/auth";
 
 const StyledWrapper = styled.div`
   width: 100%;
@@ -16,7 +17,7 @@ const StyledWrapper = styled.div`
   border-bottom: 1px solid black;
   position: absolute;
   top: 2%;
-  z-index: 1;
+  /* z-index: 1; */
 `;
 
 const StyledInnerWrapper = styled.div`
@@ -100,6 +101,15 @@ const StyledLoginButton = styled(StyledButton)`
   }
 `;
 
+const StyledLink = styled(Link)`
+  position: absolute;
+  width: 10%;
+  height: 100%;
+
+  cursor: pointer;
+  z-index: 2;
+`;
+
 const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const authLinks = (
     <StyledInnerWrapper>
@@ -120,9 +130,12 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
       </StyledLoginButton>
     </StyledInnerWrapper>
   );
+
   return (
     <StyledWrapper>
-      <StyledLogo src={logo} alt="Logo" />
+      <StyledLink to="/">
+        <StyledLogo src={logo} alt="Logo" />
+      </StyledLink>
       {!loading && <div>{isAuthenticated ? authLinks : guestLinks}</div>}
     </StyledWrapper>
   );

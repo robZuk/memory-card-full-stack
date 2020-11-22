@@ -13,6 +13,8 @@ import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const StyledWrapper = styled.div`
+  width: 100%;
+  height: 100%;
   display: grid;
   grid-template-rows: 1fr 6fr 1fr 1fr;
   grid-template-columns: auto;

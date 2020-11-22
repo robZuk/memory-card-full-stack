@@ -81,7 +81,7 @@ export const deleteCategory = (id) => async (dispatch) => {
         payload: id,
       });
 
-      dispatch(setAlert("Card Removed", "green"));
+      dispatch(setAlert("Category Removed", "green"));
     } catch (err) {
       dispatch({
         type: CATEGORY_ERROR,

@@ -29,7 +29,6 @@ const StyledWrapper = styled.div`
   grid-template-rows: auto;
   grid-template-areas:
     "back title edit"
-    "form form form"
     ". cards .";
   grid-gap: 3%;
   justify-items: center;
@@ -95,8 +94,27 @@ const StyledDeleteIcon = styled(FontAwesomeIcon)`
   }
 `;
 
-const StyledEditCategory = styled.div`
-  grid-area: form;
+const StyledEditCategoryWrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 60vh;
+  background-color: white;
+  z-index: 1;
+
+  text-align: center;
+
+  display: grid;
+  justify-items: center;
+`;
+
+const StyledEditCategory = styled(EditCategory)`
+  position: absolute;
+  margin: 0 auto;
+  padding: 3% 0;
+
+  /* width: 100%;
+  height: 60%; */
+  z-index: 2;
 `;
 
 const StyledCards = styled.div`
@@ -156,11 +174,15 @@ const Category = ({
               </StyledEditWrapper>
             )}
         </div>
-        <StyledEditCategory>
-          {showEditCategory && (
-            <EditCategory functions={[showEditCategory, setShowEditCategory]} />
-          )}
-        </StyledEditCategory>
+
+        {showEditCategory && (
+          <StyledEditCategoryWrapper>
+            <StyledEditCategory
+              functions={[showEditCategory, setShowEditCategory]}
+            />{" "}
+          </StyledEditCategoryWrapper>
+        )}
+
         <StyledCards>
           <Cards category={category} id={category._id} />
         </StyledCards>

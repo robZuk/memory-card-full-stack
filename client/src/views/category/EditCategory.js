@@ -7,27 +7,44 @@ import { connect } from "react-redux";
 import { updateCategory, getCategory } from "../../actions/category";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div`
-  width: 100%;
-  margin-top: 15%;
-  display: flex;
-  justify-content: center;
-
+  position: absolute;
+  top: -20%;
+  width: 60%;
+  height: 60%;
+  display: grid;
+  justify-items: center;
+  background-color: ${({ theme }) => theme.grey100};
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
   @media ${({ theme }) => theme.orientation.landscape} {
     margin-top: 10%;
   }
 `;
 
-const StyledInnerWrapper = styled.div`
+const StyledH1 = styled.h1`
+  margin-top: 5%;
+  font-size: ${({ theme }) => theme.fontSize.l};
+`;
+
+const StyledForm = styled.form`
+  width: 70%;
   display: grid;
+  justify-items: center;
+  align-items: flex-start;
+`;
+
+const StyledInnerWrapper = styled.div`
+  width: 70%;
+  display: grid;
+  justify-items: center;
   grid-template-columns: 2fr 1fr;
 `;
 
 const StyledButton = styled(Button)`
-  padding: 1% 1%;
+  padding: 3%;
   margin: 0 2px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSize.s};
@@ -35,7 +52,7 @@ const StyledButton = styled(Button)`
 `;
 
 const StyledInput = styled(Input)`
-  padding: 1% 3%;
+  padding: 3%;
   margin: 0 2px;
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSize.s};
@@ -44,7 +61,10 @@ const StyledInput = styled(Input)`
 
 const StyledXIcon = styled(FontAwesomeIcon)`
   cursor: pointer;
-  transform: translate(50%, -100%);
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
 const EditCategory = ({
@@ -85,7 +105,8 @@ const EditCategory = ({
 
   return (
     <StyledWrapper>
-      <form
+      <StyledH1>{category.name}</StyledH1>
+      <StyledForm
         onSubmit={(e) => {
           onSubmit(e);
           setShowEditCategory(!showEditCategory);
@@ -104,10 +125,10 @@ const EditCategory = ({
             <FontAwesomeIcon icon={faPen} /> Rename
           </StyledButton>
         </StyledInnerWrapper>
-      </form>
+      </StyledForm>
 
       <StyledXIcon
-        icon={faTimesCircle}
+        icon={faTimes}
         onClick={() => setShowEditCategory(!showEditCategory)}
       />
     </StyledWrapper>
