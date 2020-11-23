@@ -37,7 +37,7 @@ const StyledForm = styled.form`
 `;
 
 const StyledInnerWrapper = styled.div`
-  width: 70%;
+  width: 100%;
   display: grid;
   justify-items: center;
   grid-template-columns: 2fr 1fr;

@@ -66,8 +66,13 @@ const StyledCard = styled.div`
   grid-area: card;
 `;
 
+const StyledInnerWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+`;
+
 const StyledParagraph = styled.p`
-  text-align: center;
   font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
@@ -86,7 +91,7 @@ const Cards = ({ id, auth, category, deleteCard }) => {
       {showAddNewCard && (
         <CardForm id={id} functions={[showAddNewCard, setShowAddNewCard]} />
       )}
-      {!showAddNewCard && (
+      {!showAddNewCard && cardsLength !== 0 && (
         <StyledAddButton onClick={() => setShowAddNewCard(!showAddNewCard)}>
           <FontAwesomeIcon icon={faPlus} /> Add Card
         </StyledAddButton>
@@ -96,7 +101,14 @@ const Cards = ({ id, auth, category, deleteCard }) => {
         {card !== undefined ? (
           <Card key={card._id} card={card} id={category._id} />
         ) : (
-          <StyledParagraph>There are no cards in this category</StyledParagraph>
+          <StyledInnerWrapper>
+            <StyledParagraph>
+              There are no cards in this category
+            </StyledParagraph>
+            <StyledButton onClick={() => setShowAddNewCard(!showAddNewCard)}>
+              <FontAwesomeIcon icon={faPlus} /> Add New Card
+            </StyledButton>
+          </StyledInnerWrapper>
         )}
       </StyledCard>
 

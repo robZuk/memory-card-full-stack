@@ -3,7 +3,7 @@ import logo from "../../assets/images/logo.png";
 import Button from "../atoms/Button.js";
 import Paragraph from "../atoms/Paragraph.js";
 
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
