@@ -97,7 +97,7 @@ const StyledDeleteIcon = styled(FontAwesomeIcon)`
 const StyledEditCategoryWrapper = styled.div`
   position: absolute;
   width: 100%;
-  height: 60vh;
+  height: 90vh;
   background-color: white;
   z-index: 1;
 
