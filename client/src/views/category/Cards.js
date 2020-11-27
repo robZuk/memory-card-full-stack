@@ -62,8 +62,38 @@ const StyledDeleteButton = styled(StyledButton)`
   grid-area: delete;
 `;
 
-const StyledCard = styled.div`
+const StyledCardWrapper = styled.div`
   grid-area: card;
+`;
+
+const StyledCardInnerWrapper = styled.div`
+  perspective: 1000px;
+  position: relative;
+  height: 300px;
+  width: 500px;
+  max-width: 100%;
+`;
+const StyledCard = styled.div`
+  position: absolute;
+  transform: translateX(50%) rotateY(-10deg);
+  opacity: 0;
+  /* opacity: ${({ activeCard }) => (activeCard ? "1" : "0")};
+  transform: translate(${({ activeCard }) => (activeCard ? "0" : "100%")}); */
+  ${({ activeCard }) =>
+    activeCard
+      ? "opacity: 1; cursor: pointer; transform: translateX(0) rotateY(0deg); z-index: 10;"
+      : "opacity: 0;"}
+  /* opacity: 1; */
+  ${({ leftCard }) =>
+    leftCard ? "transform: translateX(-50%) rotateY(10deg);" : null}
+
+  font-size: 1.5em;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+
+  transition: transform 0.4s ease, opacity 0.4s ease;
 `;
 
 const StyledInnerWrapper = styled.div`
@@ -84,8 +114,15 @@ const Cards = ({ id, auth, category, deleteCard }) => {
   const [currentActiveCard, setCurrentActiveCard] = useState(0);
 
   const card = cards[currentActiveCard];
+
+  console.log(currentActiveCard);
+
   const [showAddNewCard, setShowAddNewCard] = useState(false);
 
+  const [activeCard, setActiveCard] = useState(false);
+  const [leftCard, setLeftCard] = useState(false);
+
+  console.log(activeCard);
   return (
     <StyledWrapper>
       {showAddNewCard && (
@@ -97,9 +134,17 @@ const Cards = ({ id, auth, category, deleteCard }) => {
         </StyledAddButton>
       )}
 
-      <StyledCard>
+      <StyledCardWrapper>
         {card !== undefined ? (
-          <Card key={card._id} card={card} id={category._id} />
+          <StyledCardInnerWrapper>
+            <StyledCard
+              activeCard={activeCard}
+              leftCard={leftCard}
+              currentActiveCard={currentActiveCard}
+            >
+              <Card key={card._id} card={card} id={category._id} />
+            </StyledCard>
+          </StyledCardInnerWrapper>
         ) : (
           <StyledInnerWrapper>
             <StyledParagraph>
@@ -110,7 +155,7 @@ const Cards = ({ id, auth, category, deleteCard }) => {
             </StyledButton>
           </StyledInnerWrapper>
         )}
-      </StyledCard>
+      </StyledCardWrapper>
 
       {!auth.loading && user === auth.user._id && cardsLength ? (
         <StyledDeleteButton
@@ -129,6 +174,7 @@ const Cards = ({ id, auth, category, deleteCard }) => {
           <StyledArrowLeft
             icon={faArrowLeft}
             onClick={() => {
+              setLeftCard(!leftCard);
               setCurrentActiveCard(currentActiveCard - 1);
               if (currentActiveCard < 1) {
                 setCurrentActiveCard(0);
@@ -141,7 +187,8 @@ const Cards = ({ id, auth, category, deleteCard }) => {
           </StyledNavigationNum>
           <StyledArrowRight
             icon={faArrowRight}
-            onClick={() => {
+            onClick={(e) => {
+              setActiveCard(!activeCard);
               setCurrentActiveCard(currentActiveCard + 1);
               if (currentActiveCard >= cardsLength - 1) {
                 setCurrentActiveCard(cardsLength - 1);
