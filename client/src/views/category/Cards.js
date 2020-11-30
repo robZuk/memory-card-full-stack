@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { deleteCard } from "../../actions/category";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import CardForm from "./CardForm";
 import Card from "./Card";
 
@@ -39,10 +39,22 @@ const StyledNavigationNum = styled.p`
 
 const StyledArrowLeft = styled(FontAwesomeIcon)`
   cursor: pointer;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.6;
+      pointer-events: none;
+    `}
 `;
 
 const StyledArrowRight = styled(FontAwesomeIcon)`
   cursor: pointer;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      opacity: 0.6;
+      pointer-events: none;
+    `}
 `;
 
 const StyledButton = styled.button`
@@ -69,31 +81,46 @@ const StyledCardWrapper = styled.div`
 const StyledCardInnerWrapper = styled.div`
   perspective: 1000px;
   position: relative;
-  height: 300px;
-  width: 500px;
+  height: 100%;
+  width: 100%;
   max-width: 100%;
 `;
-const StyledCard = styled.div`
+const StyledCard = styled.div.attrs({
+  className: "styledCard ",
+})`
+  grid-area: card;
   position: absolute;
-  transform: translateX(50%) rotateY(-10deg);
-  opacity: 0;
-  /* opacity: ${({ activeCard }) => (activeCard ? "1" : "0")};
-  transform: translate(${({ activeCard }) => (activeCard ? "0" : "100%")}); */
-  ${({ activeCard }) =>
-    activeCard
-      ? "opacity: 1; cursor: pointer; transform: translateX(0) rotateY(0deg); z-index: 10;"
-      : "opacity: 0;"}
-  /* opacity: 1; */
-  ${({ leftCard }) =>
-    leftCard ? "transform: translateX(-50%) rotateY(10deg);" : null}
-
+  opacity: 1;
   font-size: 1.5em;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-
   transition: transform 0.4s ease, opacity 0.4s ease;
+
+  @keyframes right {
+    0% {
+      transform: translateX(50%) rotateY(-10deg);
+    }
+    100% {
+      transform: translateX(0%) rotateY(0deg);
+    }
+  }
+
+  @keyframes left {
+    0% {
+      transform: translateX(-50%) rotateY(-10deg);
+    }
+    100% {
+      transform: translateX(0%) rotateY(0deg);
+    }
+  }
+  &.runRightAnimation {
+    animation: right 0.4s ease;
+  }
+  &.runLeftAnimation {
+    animation: left 0.4s ease;
+  }
 `;
 
 const StyledInnerWrapper = styled.div`
@@ -115,14 +142,27 @@ const Cards = ({ id, auth, category, deleteCard }) => {
 
   const card = cards[currentActiveCard];
 
-  console.log(currentActiveCard);
-
   const [showAddNewCard, setShowAddNewCard] = useState(false);
 
-  const [activeCard, setActiveCard] = useState(false);
-  const [leftCard, setLeftCard] = useState(false);
+  const cardClassName = document.querySelector(".styledCard");
 
-  console.log(activeCard);
+  const animateRightCard = () => {
+    if (cardClassName !== null || currentActiveCard < 0) {
+      cardClassName.classList.remove("runLeftAnimation");
+      cardClassName.classList.remove("runRightAnimation");
+      void cardClassName.offsetWidth;
+      cardClassName.classList.add("runRightAnimation");
+    }
+  };
+
+  const animateLeftCard = () => {
+    if (cardClassName !== null) {
+      cardClassName.classList.remove("runRightAnimation");
+      cardClassName.classList.remove("runLeftAnimation");
+      void cardClassName.offsetWidth;
+      cardClassName.classList.add("runLeftAnimation");
+    }
+  };
   return (
     <StyledWrapper>
       {showAddNewCard && (
@@ -138,9 +178,8 @@ const Cards = ({ id, auth, category, deleteCard }) => {
         {card !== undefined ? (
           <StyledCardInnerWrapper>
             <StyledCard
-              activeCard={activeCard}
-              leftCard={leftCard}
               currentActiveCard={currentActiveCard}
+              cardsLength={cardsLength}
             >
               <Card key={card._id} card={card} id={category._id} />
             </StyledCard>
@@ -163,6 +202,10 @@ const Cards = ({ id, auth, category, deleteCard }) => {
           value="Add"
           onClick={() => {
             deleteCard(id, card._id);
+            setCurrentActiveCard(currentActiveCard - 1);
+            if (currentActiveCard < 1) {
+              setCurrentActiveCard(0);
+            }
           }}
         >
           {" "}
@@ -172,27 +215,22 @@ const Cards = ({ id, auth, category, deleteCard }) => {
       {cardsLength !== 0 ? (
         <StyledNavigation>
           <StyledArrowLeft
+            disabled={currentActiveCard < 1}
             icon={faArrowLeft}
             onClick={() => {
-              setLeftCard(!leftCard);
               setCurrentActiveCard(currentActiveCard - 1);
-              if (currentActiveCard < 1) {
-                setCurrentActiveCard(0);
-              }
-              return;
+              animateLeftCard();
             }}
           />
           <StyledNavigationNum>
             {currentActiveCard + 1} / {cardsLength}
           </StyledNavigationNum>
           <StyledArrowRight
+            disabled={currentActiveCard >= cardsLength - 1}
             icon={faArrowRight}
             onClick={(e) => {
-              setActiveCard(!activeCard);
               setCurrentActiveCard(currentActiveCard + 1);
-              if (currentActiveCard >= cardsLength - 1) {
-                setCurrentActiveCard(cardsLength - 1);
-              }
+              animateRightCard();
             }}
           />
         </StyledNavigation>
