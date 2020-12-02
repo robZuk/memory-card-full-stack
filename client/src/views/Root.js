@@ -20,6 +20,7 @@ import Category from "./category/Category";
 const StyledWrapper = styled.div`
   position: absolute;
   top: 20%;
+
   height: 100%;
   width: 100%;
 `;

@@ -20,25 +20,30 @@ import { deleteCategory } from "../../actions/category";
 const StyledWrapper = styled.div`
   font-family: Montserrat;
   position: absolute;
-  width: 90%;
-  height: auto;
-  left: 5%;
-  right: 5%;
+  width: 100%;
   display: grid;
-  grid-template-columns: 25% 50% 25%;
+  justify-items: center;
+  grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: auto;
   grid-template-areas:
     "back title edit"
-    ". cards .";
+    "cards cards cards";
   grid-gap: 3%;
-  justify-items: center;
+
+  @media ${({ theme }) => theme.breakpoints.laptopL} {
+    grid-template-areas:
+      "back title edit"
+      ". cards .";
+  }
 `;
 
 const StyledButton = styled(Button)`
   grid-area: back;
+  justify-self: end;
+  align-self: center;
   border-style: none;
   padding: 1% 4%;
-  align-self: end;
+
   letter-spacing: 2px;
   font-weight: 700;
 
@@ -49,9 +54,11 @@ const StyledButton = styled(Button)`
 
 const StyledH2 = styled.h2`
   grid-area: title;
+  justify-self: center;
+  align-self: center;
   padding: 0;
   margin: 0;
-  align-self: end;
+
   @media ${({ theme }) => theme.breakpoints.tablet} {
     font-size: ${({ theme }) => theme.fontSize.m};
   }
@@ -62,6 +69,11 @@ const StyledH2 = styled.h2`
 
 const StyledEditWrapper = styled.div`
   grid-area: edit;
+  justify-self: center;
+  align-self: center;
+`;
+
+const StyledEdit = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
 `;
@@ -94,33 +106,40 @@ const StyledDeleteIcon = styled(FontAwesomeIcon)`
   }
 `;
 
-const StyledEditCategoryWrapper = styled.div`
+const StyledEditModalWrapper = styled.div`
   position: absolute;
   width: 100%;
-  height: 90vh;
+  height: 90%;
   background-color: white;
   z-index: 1;
-
   text-align: center;
-
   display: grid;
   justify-items: center;
+  @media ${({ theme }) => theme.orientation.landscape} {
+    height: 150%;
+  }
 `;
 
-const StyledEditCategory = styled(EditCategory)`
+const StyledEditModal = styled(EditCategory)`
   position: absolute;
   margin: 0 auto;
   padding: 3% 0;
-
-  /* width: 100%;
-  height: 60%; */
   z-index: 2;
 `;
 
 const StyledCards = styled.div`
-  margin-top: 5%;
+  margin-top: 10%;
   grid-area: cards;
-  width: 80%;
+  width: 100%;
+  @media ${({ theme }) => theme.orientation.landscape} {
+    margin-top: 5%;
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    margin-top: 10%;
+  }
+  @media ${({ theme }) => theme.breakpoints.laptopL} {
+    height: 120%;
+  }
 `;
 
 const Category = ({
@@ -150,11 +169,11 @@ const Category = ({
         </StyledButton>
         <StyledH2>{category.name}</StyledH2>
 
-        <div>
+        <StyledEditWrapper>
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === category.user && (
-              <StyledEditWrapper>
+              <StyledEdit>
                 {!showEditCategory ? (
                   <StyledEditIcon
                     icon={faPen}
@@ -171,22 +190,21 @@ const Category = ({
                   onClick={(e) => deleteCategory(match.params.id)}
                   type="button"
                 />
-              </StyledEditWrapper>
+              </StyledEdit>
             )}
-        </div>
-
-        {showEditCategory && (
-          <StyledEditCategoryWrapper>
-            <StyledEditCategory
-              functions={[showEditCategory, setShowEditCategory]}
-            />{" "}
-          </StyledEditCategoryWrapper>
-        )}
+        </StyledEditWrapper>
 
         <StyledCards>
           <Cards category={category} id={category._id} />
         </StyledCards>
       </StyledWrapper>
+      {showEditCategory && (
+        <StyledEditModalWrapper>
+          <StyledEditModal
+            functions={[showEditCategory, setShowEditCategory]}
+          />{" "}
+        </StyledEditModalWrapper>
+      )}
     </Fragment>
   );
 };

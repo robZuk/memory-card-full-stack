@@ -11,12 +11,13 @@ const GlobalStyle = createGlobalStyle`
 
 body {
   box-sizing: border-box;
+  width: 100vw;
   height: 100vh;
   padding: 0;
   margin: 0;
   font-family: 'Lato', sans-serif;
-  width: 100vw;
-  height: 100vh;
+ 
+  
 }
 
 `;

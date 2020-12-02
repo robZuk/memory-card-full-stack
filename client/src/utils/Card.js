@@ -18,7 +18,6 @@ const StyledCard = styled.div`
 
   &:after {
     content: "\f021  Flip";
-    color: ${({ theme }) => theme.grey300};
     font-family: "Font Awesome 5 Free", Lato, sans-serif;
     position: absolute;
     top: 10px;

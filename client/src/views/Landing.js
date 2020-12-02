@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 const StyledWrapper = styled.div`
   width: 100%;
-  height: 60%;
+  height: 100%;
   position: absolute;
   display: grid;
   grid-template-rows: 20fr 15fr 15fr;

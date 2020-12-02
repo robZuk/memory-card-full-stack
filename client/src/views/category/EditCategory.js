@@ -12,35 +12,46 @@ import styled from "styled-components";
 
 const StyledWrapper = styled.div`
   position: absolute;
-  top: -20%;
-  width: 60%;
-  height: 60%;
+  width: 90%;
+  height: 50%;
   display: grid;
   justify-items: center;
+  margin-top: 3%;
   background-color: ${({ theme }) => theme.grey100};
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
   @media ${({ theme }) => theme.orientation.landscape} {
-    margin-top: 10%;
+    width: 60%;
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    height: 30%;
+    width: 60%;
+  }
+  @media ${({ theme }) => theme.breakpoints.laptopL} {
+    height: 25%;
+    width: 40%;
   }
 `;
 
 const StyledH1 = styled.h1`
-  margin-top: 5%;
-  font-size: ${({ theme }) => theme.fontSize.l};
+  margin-top: 10%;
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    font-size: ${({ theme }) => theme.fontSize.l};
+  }
 `;
 
 const StyledForm = styled.form`
   width: 70%;
   display: grid;
   justify-items: center;
-  align-items: flex-start;
+  align-items: start;
 `;
 
 const StyledInnerWrapper = styled.div`
-  width: 100%;
   display: grid;
-  justify-items: center;
-  grid-template-columns: 2fr 1fr;
+  justify-items: start;
+  grid-template-columns: 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 10%;
 `;
 
 const StyledButton = styled(Button)`
@@ -77,7 +88,6 @@ const EditCategory = ({
   const [showEditCategory, setShowEditCategory] = functions;
   const [formData, setFormData] = useState({
     name: "",
-    // user: '',
   });
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { deleteCard } from "../../actions/category";
@@ -13,17 +13,37 @@ import { faMinus } from "@fortawesome/free-solid-svg-icons";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 const StyledWrapper = styled.div`
-  width: 100%;
+  width: 90%;
   height: 100%;
+  margin: 0 5%;
   display: grid;
   grid-template-rows: 1fr 6fr 1fr 1fr;
-  grid-template-columns: auto;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
-    "add  . ."
+    "add add ."
     "card card card"
-    ". . delete"
-    ". nav  .";
-  grid-gap: 10%;
+    ". delete delete"
+    ". nav .";
+  grid-gap: 5%;
+  @media ${({ theme }) => theme.orientation.landscape} {
+    grid-gap: 3%;
+    width: 60%;
+    margin: 0 20%;
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    grid-template-areas:
+      "add . ."
+      "card card card"
+      ". . delete"
+      ". nav .";
+    grid-gap: 5%;
+    width: 60%;
+    margin: 0 20%;
+  }
+
+  @media ${({ theme }) => theme.breakpoints.laptopL} {
+    font-size: ${({ theme }) => theme.fontSize.s};
+  }
 `;
 
 const StyledNavigation = styled.div`
@@ -58,12 +78,20 @@ const StyledArrowRight = styled(FontAwesomeIcon)`
 `;
 
 const StyledButton = styled.button`
+  width: 60%;
   cursor: pointer;
   padding: 3%;
   border: 1px solid ${({ theme }) => theme.grey300};
   border-radius: 3px;
   background-color: ${({ theme }) => theme.white};
   font-size: ${({ theme }) => theme.fontSize.xs};
+  @media ${({ theme }) => theme.orientation.landscape} {
+    padding: 1%;
+  }
+  @media ${({ theme }) => theme.breakpoints.tablet} {
+    width: 70%;
+    padding: 3%;
+  }
 `;
 
 const StyledAddButton = styled(StyledButton)`
@@ -72,6 +100,7 @@ const StyledAddButton = styled(StyledButton)`
 
 const StyledDeleteButton = styled(StyledButton)`
   grid-area: delete;
+  justify-self: end;
 `;
 
 const StyledCardWrapper = styled.div`
@@ -89,11 +118,7 @@ const StyledCard = styled.div.attrs({
   className: "styledCard ",
 })`
   grid-area: card;
-  position: absolute;
   opacity: 1;
-  font-size: 1.5em;
-  top: 0;
-  left: 0;
   height: 100%;
   width: 100%;
   transition: transform 0.4s ease, opacity 0.4s ease;
@@ -130,6 +155,7 @@ const StyledInnerWrapper = styled.div`
 `;
 
 const StyledParagraph = styled.p`
+  text-align: center;
   font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
@@ -164,78 +190,80 @@ const Cards = ({ id, auth, category, deleteCard }) => {
     }
   };
   return (
-    <StyledWrapper>
-      {showAddNewCard && (
-        <CardForm id={id} functions={[showAddNewCard, setShowAddNewCard]} />
-      )}
-      {!showAddNewCard && cardsLength !== 0 && (
-        <StyledAddButton onClick={() => setShowAddNewCard(!showAddNewCard)}>
-          <FontAwesomeIcon icon={faPlus} /> Add Card
-        </StyledAddButton>
-      )}
-
-      <StyledCardWrapper>
-        {card !== undefined ? (
-          <StyledCardInnerWrapper>
-            <StyledCard
-              currentActiveCard={currentActiveCard}
-              cardsLength={cardsLength}
-            >
-              <Card key={card._id} card={card} id={category._id} />
-            </StyledCard>
-          </StyledCardInnerWrapper>
-        ) : (
-          <StyledInnerWrapper>
-            <StyledParagraph>
-              There are no cards in this category
-            </StyledParagraph>
-            <StyledButton onClick={() => setShowAddNewCard(!showAddNewCard)}>
-              <FontAwesomeIcon icon={faPlus} /> Add New Card
-            </StyledButton>
-          </StyledInnerWrapper>
+    <Fragment>
+      <StyledWrapper>
+        {showAddNewCard && (
+          <CardForm id={id} functions={[showAddNewCard, setShowAddNewCard]} />
         )}
-      </StyledCardWrapper>
+        {!showAddNewCard && cardsLength !== 0 && (
+          <StyledAddButton onClick={() => setShowAddNewCard(!showAddNewCard)}>
+            <FontAwesomeIcon icon={faPlus} /> Add Card
+          </StyledAddButton>
+        )}
 
-      {!auth.loading && user === auth.user._id && cardsLength ? (
-        <StyledDeleteButton
-          type="submit"
-          value="Add"
-          onClick={() => {
-            deleteCard(id, card._id);
-            setCurrentActiveCard(currentActiveCard - 1);
-            if (currentActiveCard < 1) {
-              setCurrentActiveCard(0);
-            }
-          }}
-        >
-          {" "}
-          <FontAwesomeIcon icon={faMinus} /> Delete card
-        </StyledDeleteButton>
-      ) : null}
-      {cardsLength !== 0 ? (
-        <StyledNavigation>
-          <StyledArrowLeft
-            disabled={currentActiveCard < 1}
-            icon={faArrowLeft}
+        <StyledCardWrapper>
+          {card !== undefined ? (
+            <StyledCardInnerWrapper>
+              <StyledCard
+                currentActiveCard={currentActiveCard}
+                cardsLength={cardsLength}
+              >
+                <Card key={card._id} card={card} id={category._id} />
+              </StyledCard>
+            </StyledCardInnerWrapper>
+          ) : (
+            <StyledInnerWrapper>
+              <StyledParagraph>
+                There are no cards in this category
+              </StyledParagraph>
+              <StyledButton onClick={() => setShowAddNewCard(!showAddNewCard)}>
+                <FontAwesomeIcon icon={faPlus} /> Add New Card
+              </StyledButton>
+            </StyledInnerWrapper>
+          )}
+        </StyledCardWrapper>
+
+        {!auth.loading && user === auth.user._id && cardsLength ? (
+          <StyledDeleteButton
+            type="submit"
+            value="Add"
             onClick={() => {
+              deleteCard(id, card._id);
               setCurrentActiveCard(currentActiveCard - 1);
-              animateLeftCard();
+              if (currentActiveCard < 1) {
+                setCurrentActiveCard(0);
+              }
             }}
-          />
-          <StyledNavigationNum>
-            {currentActiveCard + 1} / {cardsLength}
-          </StyledNavigationNum>
-          <StyledArrowRight
-            disabled={currentActiveCard >= cardsLength - 1}
-            icon={faArrowRight}
-            onClick={(e) => {
-              setCurrentActiveCard(currentActiveCard + 1);
-              animateRightCard();
-            }}
-          />
-        </StyledNavigation>
-      ) : null}
-    </StyledWrapper>
+          >
+            {" "}
+            <FontAwesomeIcon icon={faMinus} /> Delete card
+          </StyledDeleteButton>
+        ) : null}
+        {cardsLength !== 0 ? (
+          <StyledNavigation>
+            <StyledArrowLeft
+              disabled={currentActiveCard < 1}
+              icon={faArrowLeft}
+              onClick={() => {
+                setCurrentActiveCard(currentActiveCard - 1);
+                animateLeftCard();
+              }}
+            />
+            <StyledNavigationNum>
+              {currentActiveCard + 1} / {cardsLength}
+            </StyledNavigationNum>
+            <StyledArrowRight
+              disabled={currentActiveCard >= cardsLength - 1}
+              icon={faArrowRight}
+              onClick={(e) => {
+                setCurrentActiveCard(currentActiveCard + 1);
+                animateRightCard();
+              }}
+            />
+          </StyledNavigation>
+        ) : null}
+      </StyledWrapper>
+    </Fragment>
   );
 };
 
