@@ -58,7 +58,7 @@ const StyledCategory = styled.div`
   }
 `;
 
-const CategoryItem = ({ category: { _id, name, user }, categoryDeleted }) => {
+const CategoryItem = ({ category: { _id, name }, categoryDeleted }) => {
   if (categoryDeleted) {
     return <Redirect to="/categories" />;
   }
@@ -76,11 +76,9 @@ const CategoryItem = ({ category: { _id, name, user }, categoryDeleted }) => {
 
 CategoryItem.propTypes = {
   category: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth,
   categoryDeleted: state.category.categoryDeleted,
 });
 

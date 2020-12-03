@@ -12,20 +12,7 @@ const StyledCard = styled.div`
   max-height: 100%;
   transform-style: preserve-3d;
   cursor: pointer;
-  perspective: 1000px;
-  transition: all 0.25s ease-in-out;
-  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
-
-  &:after {
-    content: "\f021  Flip";
-    color: ${({ theme }) => theme.grey300};
-    font-family: "Font Awesome 5 Free", Lato, sans-serif;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-weight: bold;
-    font-size: 16px;
-  }
+  perspective: 10000px;
 
   &.flipped {
     & > div:first-of-type {
@@ -53,7 +40,19 @@ const CardSide = css`
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  transition: all 0.25s ease-in;
+  transition: all 0.75s ease-in-out;
+  border: 1px solid ${({ theme }) => theme.grey300};
+
+  &:after {
+    content: "\f021  Flip";
+    color: ${({ theme }) => theme.grey300};
+    font-family: "Font Awesome 5 Free", Lato, sans-serif;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-weight: bold;
+    font-size: 16px;
+  }
 `;
 
 // Card side - front
@@ -66,7 +65,7 @@ const CardFront = styled.div`
 const CardBack = styled.div`
   ${CardSide};
   text-align: center;
-  transform: rotateY(-180deg);
+  transform: rotateY(180deg);
 `;
 
 const Card = ({ card: { question, answer } }) => {
@@ -76,13 +75,9 @@ const Card = ({ card: { question, answer } }) => {
 
   return (
     <StyledCard onClick={(e) => flipCard(e)}>
-      <CardFront>
-        <p>{question}</p>
-      </CardFront>
+      <CardFront>{question}</CardFront>
 
-      <CardBack>
-        <p>{answer}</p>
-      </CardBack>
+      <CardBack>{answer}</CardBack>
     </StyledCard>
   );
 };

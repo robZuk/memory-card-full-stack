@@ -91,7 +91,7 @@ const EditCategory = ({
   });
 
   useEffect(() => {
-    getCategory(match.params.id); //get current value from state
+    getCategory(match.params.id);
 
     setFormData({
       //if loading or !category.name

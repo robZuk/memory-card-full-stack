@@ -92,6 +92,9 @@ const StyledButton = styled.button`
     width: 70%;
     padding: 3%;
   }
+  @media ${({ theme }) => theme.breakpoints.laptopL} {
+    width: 100%;
+  }
 `;
 
 const StyledAddButton = styled(StyledButton)`

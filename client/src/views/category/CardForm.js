@@ -32,7 +32,6 @@ const StyledInnerWrapper = styled.div`
   }
   @media ${({ theme }) => theme.breakpoints.laptop} {
     width: 70%;
-    height: 40%;
   }
 `;
 

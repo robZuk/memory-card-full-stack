@@ -138,7 +138,7 @@ const StyledCards = styled.div`
     margin-top: 10%;
   }
   @media ${({ theme }) => theme.breakpoints.laptopL} {
-    height: 120%;
+    height: 110%;
   }
 `;
 
