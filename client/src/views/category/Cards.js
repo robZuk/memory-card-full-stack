@@ -162,8 +162,8 @@ const StyledParagraph = styled.p`
   font-size: ${({ theme }) => theme.fontSize.s};
 `;
 
-const Cards = ({ id, auth, category, deleteCard }) => {
-  const { cards, user } = category;
+const Cards = ({ id, category, deleteCard }) => {
+  const { cards } = category;
 
   const cardsLength = cards.length;
 
@@ -226,7 +226,7 @@ const Cards = ({ id, auth, category, deleteCard }) => {
           )}
         </StyledCardWrapper>
 
-        {!auth.loading && user === auth.user._id && cardsLength ? (
+        {cardsLength ? (
           <StyledDeleteButton
             type="submit"
             value="Add"
@@ -273,12 +273,7 @@ const Cards = ({ id, auth, category, deleteCard }) => {
 Cards.propTypes = {
   id: PropTypes.string.isRequired,
   category: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
   deleteCard: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, { deleteCard })(Cards);
+export default connect(null, { deleteCard })(Cards);

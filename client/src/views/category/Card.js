@@ -85,12 +85,7 @@ const Card = ({ card: { question, answer } }) => {
 Card.propTypes = {
   id: PropTypes.string.isRequired,
   card: PropTypes.object.isRequired,
-  auth: PropTypes.object.isRequired,
   deleteCard: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-});
-
-export default connect(mapStateToProps, { deleteCard })(Card);
+export default connect(null, { deleteCard })(Card);
