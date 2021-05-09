@@ -13,7 +13,7 @@ Application for creating memory cards with the user login panel. Technologies us
 - styled components
 
 
-###Install Dependencies (frontend & backend)
+### Install Dependencies (frontend & backend)
 ```
 npm install
 cd frontend
